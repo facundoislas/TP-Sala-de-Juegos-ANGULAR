@@ -1,12 +1,35 @@
-<div class="panel">
-  <div class="hero-text">
-      <h1 style="font-size:50px" >Sala de Juegos</h1>
-      <p>Facundo Islas</p>
-      <a href="https://github.com/facundoislas"target="_blank">en GitHub <i class="fa fa-github"></i></a>
-      <a  routerLink="/QuienSoy" >Quien Soy? <i class="fa fa-user"></i></a>
-  </div>
-  <ul class="nav navbar-nav navbar-right">
-          <li><a routerLink="/Registro"><span class="glyphicon glyphicon-user"></span>Unirse</a></li>
-          <li><a  routerLink="/Login"><span class="glyphicon glyphicon-log-in"></span> Acceder</a></li>
-  </ul>
-</div>
+	<!-- Header section -->
+	<header class="header-section">
+      <div class="header-warp">
+        <div class="header-bar-warp d-flex">
+          <div>
+            <h2 class="titulo">
+           Mi Sala de Juegos</h2>
+        </div>
+          <!-- site logo -->				
+          <nav class="top-nav-area w-100">
+            <div class="user-panel">
+              <a routerLink="/Login">Unirse</a> / <a routerLink="/Registro">Registrarse</a>
+            </div>
+            <!-- Menu -->
+            <ul class="main-menu primary-menu">
+              <li><a routerLink="/">Inicio</a></li>
+              <li><a routerLink="/Juegos">Juegos</a>
+                <ul class="sub-menu">
+                  <li><a routerLink="/Listado">Listado de Resultados</a></li>
+                </ul>
+              </li>
+              <li><a href="games.html">Sobre Facundo Islas</a>
+                <ul class="sub-menu">
+                  <li><a href="https://github.com/facundoislas" target="blank">En Github</a></li>
+                  <li><a routerLink="/QuienSoy">Sobre Mi</a></li>
+                </ul>
+              </li>
+              
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <!-- Header section end -->
