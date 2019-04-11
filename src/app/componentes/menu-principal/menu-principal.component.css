@@ -5,7 +5,8 @@
 .fondo{
   display: inline-flex;
   background-image: url(".../../../docs/assets/imagenes/slider-bg-2.jpg");
-  margin-block-start: 181px;
+  margin-block-start: 101px;
+  margin-top: -60px;
 }
 
 
