@@ -25,6 +25,12 @@ import { AdivinaMasListadoComponent } from './componentes/adivina-mas-listado/ad
 import { AgilidadMasListadoComponent } from './componentes/agilidad-mas-listado/agilidad-mas-listado.component';
 import { RuteandoModule } from './ruteando/ruteando.module';
 import { ListadoComponent } from './componentes/listado/listado.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import {AuthService} from '../app/servicios/auth.service';
+
+import {environment} from '../environments/environment';
 // declaro donde quiero que se dirija
 /*
 const MiRuteo = [{path: 'error' , component: ErrorComponent},
@@ -56,6 +62,7 @@ import { SexoPipe } from './pipes/sexo.pipe';
 import { HomeComponent } from './componentes/home/home.component';
 import { MenuPrincipalComponent } from './componentes/menu-principal/menu-principal.component';
 import { FooterComponent } from './componentes/footer/footer.component';
+import { AdivinaProvinciaComponent } from './componentes/adivina-provincia/adivina-provincia.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +91,8 @@ import { FooterComponent } from './componentes/footer/footer.component';
     SexoPipe,
     HomeComponent,
     MenuPrincipalComponent,
-    FooterComponent
+    FooterComponent,
+    AdivinaProvinciaComponent
   ],
   imports: [
     BrowserModule,
@@ -93,12 +101,16 @@ import { FooterComponent } from './componentes/footer/footer.component';
     HttpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB6f8x4IjRlesQ3oETc6BXYQHVRTOlY3Ys'
-    })
+    }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
     // NgbModule.forRoot(MiRuteo),
     // importo el ruteo
     // RouterModule.forRoot(MiRuteo)
   ],
-  providers: [ JuegoServiceService, MiHttpService,PaisesService,ArchivosJugadoresService,JugadoresService],
+  providers: [ JuegoServiceService, MiHttpService,PaisesService,ArchivosJugadoresService,JugadoresService,
+    AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

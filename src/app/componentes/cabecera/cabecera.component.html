@@ -8,21 +8,30 @@
         </div>
           <!-- site logo -->				
           <nav class="top-nav-area w-100">
-            <div class="user-panel">
-              <a routerLink="/Login">Unirse</a><a routerLink="/Registro">Registrarse</a>
+            <div class="user-panel" >
+              <div *ngIf="!logueado" >
+              <div ><a routerLink="/Login" >Ingresá</a></div>
+              <div ><a routerLink="/Registro" >Registrate</a></div>
+            </div>
+              <div *ngIf="logueado"><a routerLink="/" (click)="cerrarSesion()" >Cerrar sesion</a></div>
             </div>
             <!-- Menu -->
             <ul class="main-menu primary-menu">
               <li><a routerLink="/">Inicio</a></li>
-              <li><a routerLink="/Juegos">Juegos</a>
+              <li><a>Juegos</a>
                 <ul class="sub-menu">
-                  <li><a routerLink="/Listado">Listado de Resultados</a></li>
+                  <li><a routerLink="/Juegos/Agilidad" >Velocidad Aritmetica</a></li>
+                  <li><a routerLink="/Juegos/">Piedra, Papel o Tijera</a></li>
+                  <li><a routerLink="/Juegos/Adivina">Numero Secreto</a></li>
+                  <li><a routerLink="/Juegos/">Anagrama</a></li>
+                  <li><a routerLink="/Juegos/AdivinaProvincia">Adivina Provincia</a></li>
                 </ul>
               </li>
-              <li><a href="games.html">Sobre Facundo Islas</a>
+              <li><a routerLink="/Listado">Listado de Resultados</a>
+              <li><a>Sobre Mi</a>
                 <ul class="sub-menu">
                   <li><a href="https://github.com/facundoislas" target="blank">En Github</a></li>
-                  <li><a routerLink="/QuienSoy">Sobre Mi</a></li>
+                  <li><a routerLink="/QuienSoy">Sobre Facundo Islas</a></li>
                 </ul>
               </li>
               

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {AuthService} from '../../servicios/auth.service';
 
 import {Subscription} from "rxjs";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
@@ -11,31 +12,54 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class LoginComponent implements OnInit {
 
   private subscription: Subscription;
-  usuario = '';
-  clave= '';
+  tipoUser:string;
+  user= { email : '', password : ''};
+  Mensaje:string;
+  semuestra:boolean;
   progreso: number;
   progresoMensaje="esperando..."; 
   logeando=true;
+  logueado:boolean;
   ProgresoDeAncho:string;
 
   clase="progress-bar progress-bar-info progress-bar-striped ";
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    public auth : AuthService) {
       this.progreso=0;
       this.ProgresoDeAncho="0%";
+      const session = sessionStorage.getItem('user');
+    
 
+          if(session==null)
+          {
+          this.logueado=false;
+          }
+          else{
+          this.logueado=true;  
+          }
   }
 
   ngOnInit() {
   }
 
   Entrar() {
-    if (this.usuario === 'admin' && this.clave === 'admin') {
+    this.auth.loginUser(this.user.email,this.user.password ).then((user) => {
       this.router.navigate(['/Principal']);
-    }
+      sessionStorage.setItem("user",this.user.email);
+      sessionStorage.setItem("muestra","true");
+      }
+    )
+     .catch(async err=>{
+      alert("Error");
+      this.progreso=0;
+      this.ProgresoDeAncho="0%";
+      });
+    
   }
+
   MoverBarraDeProgreso() {
     
     this.logeando=false;
@@ -77,5 +101,23 @@ export class LoginComponent implements OnInit {
     });
     //this.logeando=true;
   }
+
+  borrar()
+    {
+      this.user.email=null;
+      this.user.password=null;
+    }
+
+    admin()
+    {
+      this.user.email="admin@gmail.com";
+        this.user.password="111111";
+    }
+
+    invitado()
+    {
+      this.user.email="invitado@gmail.com";
+        this.user.password="222222";
+    }
 
 }
