@@ -16,18 +16,22 @@ export class CabeceraComponent implements OnInit {
   constructor( public auth : AuthService,
            private router: Router,
            private route: ActivatedRoute
-           ) {
-            const session = sessionStorage.getItem('user');
+           ) 
+           {
+            }
+    verificarSesion()
+    {
+      const session = sessionStorage.getItem('user');
     
 
             if(session==null)
             {
-            this.logueado=false;
+            return false;
             }
             else{
-            this.logueado=true;  
+            return true;  
             }
-            }
+    }
 
     cerrarSesion(){
       

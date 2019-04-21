@@ -1193,7 +1193,7 @@ module.exports = "/* =================================\n------------------------
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\t<!-- Header section -->\n\t<header class=\"header-section\">\n      <div class=\"header-warp\">\n        <div class=\"header-bar-warp d-flex\">\n          <div>\n            <h2 class=\"titulo\">\n           Mi Sala de Juegos</h2>\n        </div>\n          <!-- site logo -->\t\t\t\t\n          <nav class=\"top-nav-area w-100\">\n            <div class=\"user-panel\" >\n              <div *ngIf=\"!logueado\" >\n              <div ><a routerLink=\"/Login\" >Ingresá</a></div>\n              <div ><a routerLink=\"/Registro\" >Registrate</a></div>\n            </div>\n              <div *ngIf=\"logueado\"><a routerLink=\"/\" (click)=\"cerrarSesion()\" >Cerrar sesion</a></div>\n            </div>\n            <!-- Menu -->\n            <ul class=\"main-menu primary-menu\">\n              <li><a routerLink=\"/\">Inicio</a></li>\n              <li><a>Juegos</a>\n                <ul class=\"sub-menu\">\n                  <li><a routerLink=\"/Juegos/Agilidad\" >Velocidad Aritmetica</a></li>\n                  <li><a routerLink=\"/Juegos/PiedraPapelTijera\">Piedra, Papel o Tijera</a></li>\n                  <li><a routerLink=\"/Juegos/Adivina\">Numero Secreto</a></li>\n                  <li><a routerLink=\"/Juegos/\">Anagrama</a></li>\n                  <li><a routerLink=\"/Juegos/AdivinaProvincia\">Adivina Provincia</a></li>\n                </ul>\n              </li>\n              <li><a routerLink=\"/Listado\">Listado de Resultados</a>\n              <li><a>Sobre Mi</a>\n                <ul class=\"sub-menu\">\n                  <li><a href=\"https://github.com/facundoislas\" target=\"blank\">En Github</a></li>\n                  <li><a routerLink=\"/QuienSoy\">Sobre Facundo Islas</a></li>\n                </ul>\n              </li>\n              \n              \n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n    <!-- Header section end -->"
+module.exports = "\t<!-- Header section -->\n\t<header class=\"header-section\">\n      <div class=\"header-warp\">\n        <div class=\"header-bar-warp d-flex\">\n          <div>\n            <h2 class=\"titulo\">\n           Mi Sala de Juegos</h2>\n        </div>\n          <!-- site logo -->\t\t\t\t\n          <nav class=\"top-nav-area w-100\">\n            <div class=\"user-panel\" >\n              <div *ngIf=\"!verificarSesion()\" >\n              <div ><a routerLink=\"/Login\" >Ingresá</a></div>\n              <div ><a routerLink=\"/Registro\" >Registrate</a></div>\n            </div>\n              <div *ngIf=\"verificarSesion()\"><a routerLink=\"/\" (click)=\"cerrarSesion()\" >Cerrar sesion</a></div>\n            </div>\n            <!-- Menu -->\n            <ul class=\"main-menu primary-menu\">\n              <li><a routerLink=\"/\">Inicio</a></li>\n              <li><a>Juegos</a>\n                <ul class=\"sub-menu\">\n                  <li><a routerLink=\"/Juegos/Agilidad\" >Velocidad Aritmetica</a></li>\n                  <li><a routerLink=\"/Juegos/PiedraPapelTijera\">Piedra, Papel o Tijera</a></li>\n                  <li><a routerLink=\"/Juegos/Adivina\">Numero Secreto</a></li>\n                  <li><a routerLink=\"/Juegos/\">Anagrama</a></li>\n                  <li><a routerLink=\"/Juegos/AdivinaProvincia\">Adivina Provincia</a></li>\n                </ul>\n              </li>\n              <li><a routerLink=\"/Listado\">Listado de Resultados</a>\n              <li><a>Sobre Mi</a>\n                <ul class=\"sub-menu\">\n                  <li><a href=\"https://github.com/facundoislas\" target=\"blank\">En Github</a></li>\n                  <li><a routerLink=\"/QuienSoy\">Sobre Facundo Islas</a></li>\n                </ul>\n              </li>\n              \n              \n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n    <!-- Header section end -->"
 
 /***/ }),
 
@@ -1220,14 +1220,16 @@ var CabeceraComponent = /** @class */ (function () {
         this.auth = auth;
         this.router = router;
         this.route = route;
+    }
+    CabeceraComponent.prototype.verificarSesion = function () {
         var session = sessionStorage.getItem('user');
         if (session == null) {
-            this.logueado = false;
+            return false;
         }
         else {
-            this.logueado = true;
+            return true;
         }
-    }
+    };
     CabeceraComponent.prototype.cerrarSesion = function () {
         this.auth.logout();
         sessionStorage.clear();

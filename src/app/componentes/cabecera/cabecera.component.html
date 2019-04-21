@@ -9,11 +9,11 @@
           <!-- site logo -->				
           <nav class="top-nav-area w-100">
             <div class="user-panel" >
-              <div *ngIf="!logueado" >
+              <div *ngIf="!verificarSesion()" >
               <div ><a routerLink="/Login" >Ingresá</a></div>
               <div ><a routerLink="/Registro" >Registrate</a></div>
             </div>
-              <div *ngIf="logueado"><a routerLink="/" (click)="cerrarSesion()" >Cerrar sesion</a></div>
+              <div *ngIf="verificarSesion()"><a routerLink="/" (click)="cerrarSesion()" >Cerrar sesion</a></div>
             </div>
             <!-- Menu -->
             <ul class="main-menu primary-menu">
