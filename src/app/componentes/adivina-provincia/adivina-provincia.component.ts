@@ -13,6 +13,7 @@ export class AdivinaProvinciaComponent implements OnInit {
   ocultarVerificar : boolean;
   ocultarNuevo : boolean;
   Mensajes:string;
+  nombre:string = "Adivina la Provincia"
   arrayResultados : Array<any>;
   jugador = JSON.parse(localStorage.getItem("Id"));
   intentos: number;
@@ -21,6 +22,7 @@ export class AdivinaProvinciaComponent implements OnInit {
 
     this.nuevoJuego = new JuegoAdivinaProvincia("Adivina La Provincia",false,this.jugador, 0, "00");
     this.ocultarVerificar = true;
+    
     this.arrayResultados = JSON.parse(this.jugador);
     this.intentos = 0;
     console.info(this.arrayResultados);

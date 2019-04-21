@@ -1,7 +1,7 @@
 form {
-    background-color: royalblue;
+  
     text-align: center;
-    border: 2px solid wheat;
+    
     padding:0px;
     margin: 0 auto;
     background-position: center;
@@ -32,7 +32,7 @@ form {
   }
   
   h1{
-      color: black;
+      color: yellow;
       text-underline-position: above;
   }
   
@@ -48,7 +48,7 @@ form {
       margin: 8px 0;
       border: none;
       cursor: pointer;
-      width: 100%;
+      width: 50%;
   }
   
   button:hover {
@@ -72,7 +72,7 @@ form {
       cursor: pointer;
       border-radius: 40px;
       border: white 4px solid;
-      width: 75%;
+      width: 50%;
       background-color: orange;
   }
   
@@ -101,4 +101,10 @@ form {
       visibility: visible;
       -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
       animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  .fondo{
+
+    background-image: url(".../../../docs/assets/imagenes/slider-bg-2.jpg");
+    margin-top: -60px;
   }

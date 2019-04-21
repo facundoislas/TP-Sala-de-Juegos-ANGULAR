@@ -63,6 +63,7 @@ import { HomeComponent } from './componentes/home/home.component';
 import { MenuPrincipalComponent } from './componentes/menu-principal/menu-principal.component';
 import { FooterComponent } from './componentes/footer/footer.component';
 import { AdivinaProvinciaComponent } from './componentes/adivina-provincia/adivina-provincia.component';
+import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/piedra-papel-tijera.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { AdivinaProvinciaComponent } from './componentes/adivina-provincia/adivi
     HomeComponent,
     MenuPrincipalComponent,
     FooterComponent,
-    AdivinaProvinciaComponent
+    AdivinaProvinciaComponent,
+    PiedraPapelTijeraComponent
   ],
   imports: [
     BrowserModule,

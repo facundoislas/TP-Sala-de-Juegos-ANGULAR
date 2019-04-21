@@ -1,8 +1,7 @@
 
 form {
-    border: 10px solid #f1f1f1;
+  
     padding: 10px;
-    background:gray;
 }
 
 input[type=text], input[type=password] {
@@ -67,3 +66,9 @@ span.psw {
        width: 100%;
     }
 }
+
+.fondo{
+
+    background-image: url(".../../../docs/assets/imagenes/slider-bg-2.jpg");
+    margin-top: -60px;
+  }

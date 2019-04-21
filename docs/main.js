@@ -41,7 +41,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--Donde se encuentre este tag, se instancian los componentes dependientes del ruteo-->\n<router-outlet></router-outlet>\n"
+module.exports = "\n<app-cabecera>  </app-cabecera>\n\n<router-outlet></router-outlet>\n  \n<app-footer></app-footer>\n"
 
 /***/ }),
 
@@ -133,6 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentes_menu_principal_menu_principal_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./componentes/menu-principal/menu-principal.component */ "./src/app/componentes/menu-principal/menu-principal.component.ts");
 /* harmony import */ var _componentes_footer_footer_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./componentes/footer/footer.component */ "./src/app/componentes/footer/footer.component.ts");
 /* harmony import */ var _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./componentes/adivina-provincia/adivina-provincia.component */ "./src/app/componentes/adivina-provincia/adivina-provincia.component.ts");
+/* harmony import */ var _componentes_piedra_papel_tijera_piedra_papel_tijera_component__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./componentes/piedra-papel-tijera/piedra-papel-tijera.component */ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts");
 
 
 
@@ -191,6 +192,7 @@ const MiRuteo = [{path: 'error' , component: ErrorComponent},
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -223,7 +225,8 @@ var AppModule = /** @class */ (function () {
                 _componentes_home_home_component__WEBPACK_IMPORTED_MODULE_40__["HomeComponent"],
                 _componentes_menu_principal_menu_principal_component__WEBPACK_IMPORTED_MODULE_41__["MenuPrincipalComponent"],
                 _componentes_footer_footer_component__WEBPACK_IMPORTED_MODULE_42__["FooterComponent"],
-                _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_43__["AdivinaProvinciaComponent"]
+                _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_43__["AdivinaProvinciaComponent"],
+                _componentes_piedra_papel_tijera_piedra_papel_tijera_component__WEBPACK_IMPORTED_MODULE_44__["PiedraPapelTijeraComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -378,10 +381,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var JuegoAdivina = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](JuegoAdivina, _super);
-    function JuegoAdivina(nombre, gano, jugador) {
-        var _this = _super.call(this, "Adivina el número", gano, jugador) || this;
+    function JuegoAdivina(nombre, gano, jugador, intentos, resultado) {
+        var _this = _super.call(this, nombre, gano, jugador, intentos, resultado) || this;
         _this.numeroSecreto = 0;
-        _this.numeroIngresado = 0;
+        _this.numeroIngresado = null;
+        _this.nombre = "Adivina el numero";
         return _this;
     }
     JuegoAdivina.prototype.verificar = function () {
@@ -423,11 +427,147 @@ var JuegoAdivina = /** @class */ (function (_super) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JuegoAgilidad", function() { return JuegoAgilidad; });
-var JuegoAgilidad = /** @class */ (function () {
-    function JuegoAgilidad() {
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _clases_juego__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../clases/juego */ "./src/app/clases/juego.ts");
+
+
+var JuegoAgilidad = /** @class */ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](JuegoAgilidad, _super);
+    function JuegoAgilidad(nombre, gano, jugador, intentos, resultado) {
+        return _super.call(this, "Agilidad Aritmetica", gano, jugador, intentos, resultado) || this;
     }
+    JuegoAgilidad.prototype.generar = function () {
+        this.primerNumero = Math.round(Math.random() * 10);
+        this.segundoNumero = Math.round(Math.random() * 10);
+        var numOperador = Math.round(Math.random() * 3);
+        switch (numOperador) {
+            case 0:
+                this.operador = "+";
+                this.resultado = this.primerNumero + this.segundoNumero;
+                break;
+            case 1:
+                this.operador = "-";
+                this.resultado = this.primerNumero - this.segundoNumero;
+                break;
+            case 2:
+                this.operador = "*";
+                this.resultado = this.primerNumero * this.segundoNumero;
+                break;
+            case 3:
+                this.operador = "/";
+                if (this.segundoNumero != 0)
+                    this.resultado = this.primerNumero / this.segundoNumero;
+                break;
+        }
+    };
+    JuegoAgilidad.prototype.verificar = function () {
+        if (this.resultado == this.resultadoUsuario) {
+            this.gano = true;
+        }
+        if (this.gano) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
     return JuegoAgilidad;
-}());
+}(_clases_juego__WEBPACK_IMPORTED_MODULE_1__["Juego"]));
+
+
+
+/***/ }),
+
+/***/ "./src/app/clases/juego-piedra-papel-tijera.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/clases/juego-piedra-papel-tijera.ts ***!
+  \*****************************************************/
+/*! exports provided: JuegoPiedraPapelTijera */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JuegoPiedraPapelTijera", function() { return JuegoPiedraPapelTijera; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _clases_juego__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../clases/juego */ "./src/app/clases/juego.ts");
+
+
+var JuegoPiedraPapelTijera = /** @class */ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](JuegoPiedraPapelTijera, _super);
+    function JuegoPiedraPapelTijera(nombre, gano, jugador, intentos, resultado) {
+        var _this = _super.call(this, "Piedra, Papel o Tijera", gano, jugador, intentos, resultado) || this;
+        _this.resultado = null;
+        _this.opcionMaquina = null;
+        return _this;
+    }
+    JuegoPiedraPapelTijera.prototype.verificar = function () {
+        return true;
+    };
+    JuegoPiedraPapelTijera.prototype.eleccionMaquina = function () {
+        this.opcionMaquina = Math.floor(Math.random() * 3) + 1;
+        console.log("Esto es la opcion elegida " + this.opcionMaquina);
+        var respuesta;
+        switch (this.opcionMaquina) {
+            case 1:
+                respuesta = "Piedra";
+                break;
+            case 2:
+                respuesta = "Papel";
+                break;
+            case 3:
+                respuesta = "Tijera";
+                break;
+        }
+        this.compu = respuesta;
+        return respuesta;
+    };
+    JuegoPiedraPapelTijera.prototype.Jugar = function (opcionUsuario) {
+        var maquina = this.eleccionMaquina();
+        switch (opcionUsuario) {
+            case "Piedra":
+                if (maquina == "Papel") {
+                    this.resultado = "Perdiste, la piedra es envuelta por el papel";
+                    this.gana = false;
+                }
+                else if (maquina == "Tijera") {
+                    this.resultado = "Ganaste, la piedra Rompe la Tijera";
+                    this.gana = true;
+                }
+                else
+                    this.resultado = "Empataron, ambos eligieron la Piedra";
+                this.gana = false;
+                break;
+            case "Papel":
+                if (maquina == "Tijera") {
+                    this.resultado = "Perdiste, la tijera corta el papel";
+                    this.gana = false;
+                }
+                else if (maquina == "Piedra") {
+                    this.resultado = "Ganaste, el papel envuelve la Piedra";
+                    this.gana = true;
+                }
+                else
+                    this.resultado = "Empataron, ambos eligieron Papel";
+                this.gana = false;
+                break;
+            case "Tijera":
+                if (maquina == "Piedra") {
+                    this.resultado = "Perdiste, la piedra rompe la tijera";
+                    this.gana = false;
+                }
+                else if (maquina == "papel") {
+                    this.resultado = "Ganaste, la tijera corta el papel";
+                    this.gana = true;
+                }
+                else
+                    this.resultado = "Empataron, ambos eligieron la tijera";
+                this.gana = false;
+                break;
+        }
+        return this.resultado;
+    };
+    return JuegoPiedraPapelTijera;
+}(_clases_juego__WEBPACK_IMPORTED_MODULE_1__["Juego"]));
 
 
 
@@ -499,7 +639,7 @@ var Juego = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\nform {\n    border: 10px solid #f1f1f1;\n    padding: 10px;\n    background:gray;\n}\n\ninput[type=text], input[type=password] {\n    width: 100%;\n    padding: 12px 20px;\n    margin: 8px 0;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-sizing: border-box;\n}\n\nbutton {\n    /*background-color: #4CAF50;*/\n    color: white;\n    padding: 14px 20px;\n    margin: 8px 0;\n    border: none;\n    cursor: pointer;\n    width: 100%;\n}\n\nbutton:hover {\n    opacity: 0.8;\n}\n\n.cancelbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #f44336;\n}\n\n.aceptbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #3664F4;\n}\n\n.imgcontainer {\n    text-align: center;\n    margin: 24px 0 12px 0;\n}\n\nimg.avatar {\n    width: 40%;\n    border-radius: 50%;\n}\n\n.container {\n    padding: 16px;\n}\n\nspan.psw {\n    float: right;\n    padding-top: 16px;\n}\n\n/* Change styles for span and cancel button on extra small screens */\n\n@media screen and (max-width: 300px) {\n    span.psw {\n       display: block;\n       float: none;\n    }\n    .cancelbtn {\n       width: 100%;\n    }\n}\n\n#snackbar {\n    visibility: hidden;\n    min-width: 250px;\n    margin-left: -125px;\n   \n    color: #fff;\n    text-align: center;\n    border-radius: 2px;\n    padding: 16px;\n    position: fixed;\n    z-index: 1;\n    left: 50%;\n    bottom: 30px;\n    font-size: 17px;\n}\n\n#snackbar.Ganador {\n    background-color: #059F2F;\n}\n\n#snackbar.Perdedor {\n    background-color: #FF0000;\n}\n\n#snackbar.show {\n    visibility: visible;\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\n}\n\n@-webkit-keyframes fadein {\n    from {bottom: 0; opacity: 0;} \n    to {bottom: 30px; opacity: 1;}\n}\n\n@keyframes fadein {\n    from {bottom: 0; opacity: 0;}\n    to {bottom: 30px; opacity: 1;}\n}\n\n@-webkit-keyframes fadeout {\n    from {bottom: 30px; opacity: 1;} \n    to {bottom: 0; opacity: 0;}\n}\n\n@keyframes fadeout {\n    from {bottom: 30px; opacity: 1;}\n    to {bottom: 0; opacity: 0;}\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1lbC1udW1lcm8vYWRpdmluYS1lbC1udW1lcm8uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSwwQkFBMEI7SUFDMUIsYUFBYTtJQUNiLGVBQWU7QUFDbkI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixxQkFBcUI7SUFDckIsc0JBQXNCO0lBQ3RCLHNCQUFzQjtBQUMxQjs7QUFFQTtJQUNJLDZCQUE2QjtJQUM3QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixZQUFZO0lBQ1osZUFBZTtJQUNmLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLHlCQUF5QjtBQUM3Qjs7QUFDQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7SUFDbEIseUJBQXlCO0FBQzdCOztBQUNBO0lBQ0ksa0JBQWtCO0lBQ2xCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLFVBQVU7SUFDVixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLGlCQUFpQjtBQUNyQjs7QUFFQSxvRUFBb0U7O0FBQ3BFO0lBQ0k7T0FDRyxjQUFjO09BQ2QsV0FBVztJQUNkO0lBQ0E7T0FDRyxXQUFXO0lBQ2Q7QUFDSjs7QUFJQTtJQUNJLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsbUJBQW1COztJQUVuQixXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsZUFBZTtJQUNmLFVBQVU7SUFDVixTQUFTO0lBQ1QsWUFBWTtJQUNaLGVBQWU7QUFDbkI7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSxtQkFBbUI7SUFDbkIsaURBQWlEO0lBQ2pELHlDQUF5QztBQUM3Qzs7QUFFQTtJQUNJLE1BQU0sU0FBUyxFQUFFLFVBQVUsQ0FBQztJQUM1QixJQUFJLFlBQVksRUFBRSxVQUFVLENBQUM7QUFDakM7O0FBRUE7SUFDSSxNQUFNLFNBQVMsRUFBRSxVQUFVLENBQUM7SUFDNUIsSUFBSSxZQUFZLEVBQUUsVUFBVSxDQUFDO0FBQ2pDOztBQUVBO0lBQ0ksTUFBTSxZQUFZLEVBQUUsVUFBVSxDQUFDO0lBQy9CLElBQUksU0FBUyxFQUFFLFVBQVUsQ0FBQztBQUM5Qjs7QUFFQTtJQUNJLE1BQU0sWUFBWSxFQUFFLFVBQVUsQ0FBQztJQUMvQixJQUFJLFNBQVMsRUFBRSxVQUFVLENBQUM7QUFDOUIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9hZGl2aW5hLWVsLW51bWVyby9hZGl2aW5hLWVsLW51bWVyby5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG5mb3JtIHtcbiAgICBib3JkZXI6IDEwcHggc29saWQgI2YxZjFmMTtcbiAgICBwYWRkaW5nOiAxMHB4O1xuICAgIGJhY2tncm91bmQ6Z3JheTtcbn1cblxuaW5wdXRbdHlwZT10ZXh0XSwgaW5wdXRbdHlwZT1wYXNzd29yZF0ge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHBhZGRpbmc6IDEycHggMjBweDtcbiAgICBtYXJnaW46IDhweCAwO1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG59XG5cbmJ1dHRvbiB7XG4gICAgLypiYWNrZ3JvdW5kLWNvbG9yOiAjNENBRjUwOyovXG4gICAgY29sb3I6IHdoaXRlO1xuICAgIHBhZGRpbmc6IDE0cHggMjBweDtcbiAgICBtYXJnaW46IDhweCAwO1xuICAgIGJvcmRlcjogbm9uZTtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgd2lkdGg6IDEwMCU7XG59XG5cbmJ1dHRvbjpob3ZlciB7XG4gICAgb3BhY2l0eTogMC44O1xufVxuXG4uY2FuY2VsYnRuIHtcbiAgICB3aWR0aDogYXV0bztcbiAgICBwYWRkaW5nOiAxMHB4IDE4cHg7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2Y0NDMzNjtcbn1cbi5hY2VwdGJ0biB7XG4gICAgd2lkdGg6IGF1dG87XG4gICAgcGFkZGluZzogMTBweCAxOHB4O1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMzNjY0RjQ7XG59XG4uaW1nY29udGFpbmVyIHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgbWFyZ2luOiAyNHB4IDAgMTJweCAwO1xufVxuXG5pbWcuYXZhdGFyIHtcbiAgICB3aWR0aDogNDAlO1xuICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcbn1cblxuLmNvbnRhaW5lciB7XG4gICAgcGFkZGluZzogMTZweDtcbn1cblxuc3Bhbi5wc3cge1xuICAgIGZsb2F0OiByaWdodDtcbiAgICBwYWRkaW5nLXRvcDogMTZweDtcbn1cblxuLyogQ2hhbmdlIHN0eWxlcyBmb3Igc3BhbiBhbmQgY2FuY2VsIGJ1dHRvbiBvbiBleHRyYSBzbWFsbCBzY3JlZW5zICovXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAzMDBweCkge1xuICAgIHNwYW4ucHN3IHtcbiAgICAgICBkaXNwbGF5OiBibG9jaztcbiAgICAgICBmbG9hdDogbm9uZTtcbiAgICB9XG4gICAgLmNhbmNlbGJ0biB7XG4gICAgICAgd2lkdGg6IDEwMCU7XG4gICAgfVxufVxuXG5cblxuI3NuYWNrYmFyIHtcbiAgICB2aXNpYmlsaXR5OiBoaWRkZW47XG4gICAgbWluLXdpZHRoOiAyNTBweDtcbiAgICBtYXJnaW4tbGVmdDogLTEyNXB4O1xuICAgXG4gICAgY29sb3I6ICNmZmY7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGJvcmRlci1yYWRpdXM6IDJweDtcbiAgICBwYWRkaW5nOiAxNnB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB6LWluZGV4OiAxO1xuICAgIGxlZnQ6IDUwJTtcbiAgICBib3R0b206IDMwcHg7XG4gICAgZm9udC1zaXplOiAxN3B4O1xufVxuI3NuYWNrYmFyLkdhbmFkb3Ige1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMwNTlGMkY7XG59XG4jc25hY2tiYXIuUGVyZGVkb3Ige1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNGRjAwMDA7XG59XG4jc25hY2tiYXIuc2hvdyB7XG4gICAgdmlzaWJpbGl0eTogdmlzaWJsZTtcbiAgICAtd2Via2l0LWFuaW1hdGlvbjogZmFkZWluIDAuNXMsIGZhZGVvdXQgMC41cyAyLjVzO1xuICAgIGFuaW1hdGlvbjogZmFkZWluIDAuNXMsIGZhZGVvdXQgMC41cyAyLjVzO1xufVxuXG5ALXdlYmtpdC1rZXlmcmFtZXMgZmFkZWluIHtcbiAgICBmcm9tIHtib3R0b206IDA7IG9wYWNpdHk6IDA7fSBcbiAgICB0byB7Ym90dG9tOiAzMHB4OyBvcGFjaXR5OiAxO31cbn1cblxuQGtleWZyYW1lcyBmYWRlaW4ge1xuICAgIGZyb20ge2JvdHRvbTogMDsgb3BhY2l0eTogMDt9XG4gICAgdG8ge2JvdHRvbTogMzBweDsgb3BhY2l0eTogMTt9XG59XG5cbkAtd2Via2l0LWtleWZyYW1lcyBmYWRlb3V0IHtcbiAgICBmcm9tIHtib3R0b206IDMwcHg7IG9wYWNpdHk6IDE7fSBcbiAgICB0byB7Ym90dG9tOiAwOyBvcGFjaXR5OiAwO31cbn1cblxuQGtleWZyYW1lcyBmYWRlb3V0IHtcbiAgICBmcm9tIHtib3R0b206IDMwcHg7IG9wYWNpdHk6IDE7fVxuICAgIHRvIHtib3R0b206IDA7IG9wYWNpdHk6IDA7fVxufSJdfQ== */"
+module.exports = "\nform {\n    border: 10px solid #f1f1f1;\n    padding: 10px;\n    background:gray;\n}\n\ninput[type=text], input[type=password] {\n    width: 100%;\n    padding: 12px 20px;\n    margin: 8px 0;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-sizing: border-box;\n}\n\nbutton {\n    /*background-color: #4CAF50;*/\n    color: white;\n    padding: 14px 20px;\n    margin: 8px 0;\n    border: none;\n    cursor: pointer;\n    width: 100%;\n}\n\nbutton:hover {\n    opacity: 0.8;\n}\n\n.cancelbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #f44336;\n}\n\n.aceptbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #3664F4;\n}\n\n.imgcontainer {\n    text-align: center;\n    margin: 24px 0 12px 0;\n}\n\nimg.avatar {\n    width: 40%;\n    border-radius: 50%;\n}\n\n.container {\n    padding: 16px;\n}\n\nspan.psw {\n    float: right;\n    padding-top: 16px;\n}\n\n/* Change styles for span and cancel button on extra small screens */\n\n@media screen and (max-width: 300px) {\n    span.psw {\n       display: block;\n       float: none;\n    }\n    .cancelbtn {\n       width: 100%;\n    }\n}\n\n#snackbar {\n    visibility: hidden;\n    min-width: 250px;\n    margin-left: -125px;\n   \n    color: #fff;\n    text-align: center;\n    border-radius: 2px;\n    padding: 16px;\n    position: fixed;\n    z-index: 1;\n    left: 50%;\n    bottom: 30px;\n    font-size: 17px;\n}\n\n#snackbar.Ganador {\n    background-color: #059F2F;\n}\n\n#snackbar.Perdedor {\n    background-color: #FF0000;\n}\n\n#snackbar.show {\n    visibility: visible;\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\n}\n\n@-webkit-keyframes fadein {\n    from {bottom: 0; opacity: 0;} \n    to {bottom: 30px; opacity: 1;}\n}\n\n@keyframes fadein {\n    from {bottom: 0; opacity: 0;}\n    to {bottom: 30px; opacity: 1;}\n}\n\n@-webkit-keyframes fadeout {\n    from {bottom: 30px; opacity: 1;} \n    to {bottom: 0; opacity: 0;}\n}\n\n@keyframes fadeout {\n    from {bottom: 30px; opacity: 1;}\n    to {bottom: 0; opacity: 0;}\n}\n\n.fondo{\n\n    background-image: url('slider-bg-2.jpg');\n    margin-top: -60px;\n  }\n\n.juego{\n    width: 23%;\n    margin-left: 40%;\n    color: wheat;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1lbC1udW1lcm8vYWRpdmluYS1lbC1udW1lcm8uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSwwQkFBMEI7SUFDMUIsYUFBYTtJQUNiLGVBQWU7QUFDbkI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixxQkFBcUI7SUFDckIsc0JBQXNCO0lBQ3RCLHNCQUFzQjtBQUMxQjs7QUFFQTtJQUNJLDZCQUE2QjtJQUM3QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixZQUFZO0lBQ1osZUFBZTtJQUNmLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLHlCQUF5QjtBQUM3Qjs7QUFDQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7SUFDbEIseUJBQXlCO0FBQzdCOztBQUNBO0lBQ0ksa0JBQWtCO0lBQ2xCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLFVBQVU7SUFDVixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLGlCQUFpQjtBQUNyQjs7QUFFQSxvRUFBb0U7O0FBQ3BFO0lBQ0k7T0FDRyxjQUFjO09BQ2QsV0FBVztJQUNkO0lBQ0E7T0FDRyxXQUFXO0lBQ2Q7QUFDSjs7QUFJQTtJQUNJLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsbUJBQW1COztJQUVuQixXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsZUFBZTtJQUNmLFVBQVU7SUFDVixTQUFTO0lBQ1QsWUFBWTtJQUNaLGVBQWU7QUFDbkI7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSxtQkFBbUI7SUFDbkIsaURBQWlEO0lBQ2pELHlDQUF5QztBQUM3Qzs7QUFFQTtJQUNJLE1BQU0sU0FBUyxFQUFFLFVBQVUsQ0FBQztJQUM1QixJQUFJLFlBQVksRUFBRSxVQUFVLENBQUM7QUFDakM7O0FBRUE7SUFDSSxNQUFNLFNBQVMsRUFBRSxVQUFVLENBQUM7SUFDNUIsSUFBSSxZQUFZLEVBQUUsVUFBVSxDQUFDO0FBQ2pDOztBQUVBO0lBQ0ksTUFBTSxZQUFZLEVBQUUsVUFBVSxDQUFDO0lBQy9CLElBQUksU0FBUyxFQUFFLFVBQVUsQ0FBQztBQUM5Qjs7QUFFQTtJQUNJLE1BQU0sWUFBWSxFQUFFLFVBQVUsQ0FBQztJQUMvQixJQUFJLFNBQVMsRUFBRSxVQUFVLENBQUM7QUFDOUI7O0FBRUE7O0lBRUksd0NBQXVFO0lBQ3ZFLGlCQUFpQjtFQUNuQjs7QUFDQTtJQUNFLFVBQVU7SUFDVixnQkFBZ0I7SUFDaEIsWUFBWTtFQUNkIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1lbC1udW1lcm8vYWRpdmluYS1lbC1udW1lcm8uY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuZm9ybSB7XG4gICAgYm9yZGVyOiAxMHB4IHNvbGlkICNmMWYxZjE7XG4gICAgcGFkZGluZzogMTBweDtcbiAgICBiYWNrZ3JvdW5kOmdyYXk7XG59XG5cbmlucHV0W3R5cGU9dGV4dF0sIGlucHV0W3R5cGU9cGFzc3dvcmRdIHtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBwYWRkaW5nOiAxMnB4IDIwcHg7XG4gICAgbWFyZ2luOiA4cHggMDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xufVxuXG5idXR0b24ge1xuICAgIC8qYmFja2dyb3VuZC1jb2xvcjogIzRDQUY1MDsqL1xuICAgIGNvbG9yOiB3aGl0ZTtcbiAgICBwYWRkaW5nOiAxNHB4IDIwcHg7XG4gICAgbWFyZ2luOiA4cHggMDtcbiAgICBib3JkZXI6IG5vbmU7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIHdpZHRoOiAxMDAlO1xufVxuXG5idXR0b246aG92ZXIge1xuICAgIG9wYWNpdHk6IDAuODtcbn1cblxuLmNhbmNlbGJ0biB7XG4gICAgd2lkdGg6IGF1dG87XG4gICAgcGFkZGluZzogMTBweCAxOHB4O1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNmNDQzMzY7XG59XG4uYWNlcHRidG4ge1xuICAgIHdpZHRoOiBhdXRvO1xuICAgIHBhZGRpbmc6IDEwcHggMThweDtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzY2NEY0O1xufVxuLmltZ2NvbnRhaW5lciB7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIG1hcmdpbjogMjRweCAwIDEycHggMDtcbn1cblxuaW1nLmF2YXRhciB7XG4gICAgd2lkdGg6IDQwJTtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG59XG5cbi5jb250YWluZXIge1xuICAgIHBhZGRpbmc6IDE2cHg7XG59XG5cbnNwYW4ucHN3IHtcbiAgICBmbG9hdDogcmlnaHQ7XG4gICAgcGFkZGluZy10b3A6IDE2cHg7XG59XG5cbi8qIENoYW5nZSBzdHlsZXMgZm9yIHNwYW4gYW5kIGNhbmNlbCBidXR0b24gb24gZXh0cmEgc21hbGwgc2NyZWVucyAqL1xuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMzAwcHgpIHtcbiAgICBzcGFuLnBzdyB7XG4gICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgZmxvYXQ6IG5vbmU7XG4gICAgfVxuICAgIC5jYW5jZWxidG4ge1xuICAgICAgIHdpZHRoOiAxMDAlO1xuICAgIH1cbn1cblxuXG5cbiNzbmFja2JhciB7XG4gICAgdmlzaWJpbGl0eTogaGlkZGVuO1xuICAgIG1pbi13aWR0aDogMjUwcHg7XG4gICAgbWFyZ2luLWxlZnQ6IC0xMjVweDtcbiAgIFxuICAgIGNvbG9yOiAjZmZmO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBib3JkZXItcmFkaXVzOiAycHg7XG4gICAgcGFkZGluZzogMTZweDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgei1pbmRleDogMTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgYm90dG9tOiAzMHB4O1xuICAgIGZvbnQtc2l6ZTogMTdweDtcbn1cbiNzbmFja2Jhci5HYW5hZG9yIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDU5RjJGO1xufVxuI3NuYWNrYmFyLlBlcmRlZG9yIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjRkYwMDAwO1xufVxuI3NuYWNrYmFyLnNob3cge1xuICAgIHZpc2liaWxpdHk6IHZpc2libGU7XG4gICAgLXdlYmtpdC1hbmltYXRpb246IGZhZGVpbiAwLjVzLCBmYWRlb3V0IDAuNXMgMi41cztcbiAgICBhbmltYXRpb246IGZhZGVpbiAwLjVzLCBmYWRlb3V0IDAuNXMgMi41cztcbn1cblxuQC13ZWJraXQta2V5ZnJhbWVzIGZhZGVpbiB7XG4gICAgZnJvbSB7Ym90dG9tOiAwOyBvcGFjaXR5OiAwO30gXG4gICAgdG8ge2JvdHRvbTogMzBweDsgb3BhY2l0eTogMTt9XG59XG5cbkBrZXlmcmFtZXMgZmFkZWluIHtcbiAgICBmcm9tIHtib3R0b206IDA7IG9wYWNpdHk6IDA7fVxuICAgIHRvIHtib3R0b206IDMwcHg7IG9wYWNpdHk6IDE7fVxufVxuXG5ALXdlYmtpdC1rZXlmcmFtZXMgZmFkZW91dCB7XG4gICAgZnJvbSB7Ym90dG9tOiAzMHB4OyBvcGFjaXR5OiAxO30gXG4gICAgdG8ge2JvdHRvbTogMDsgb3BhY2l0eTogMDt9XG59XG5cbkBrZXlmcmFtZXMgZmFkZW91dCB7XG4gICAgZnJvbSB7Ym90dG9tOiAzMHB4OyBvcGFjaXR5OiAxO31cbiAgICB0byB7Ym90dG9tOiAwOyBvcGFjaXR5OiAwO31cbn1cblxuLmZvbmRve1xuXG4gICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4uLy4uLy4uL2RvY3MvYXNzZXRzL2ltYWdlbmVzL3NsaWRlci1iZy0yLmpwZ1wiKTtcbiAgICBtYXJnaW4tdG9wOiAtNjBweDtcbiAgfVxuICAuanVlZ297XG4gICAgd2lkdGg6IDIzJTtcbiAgICBtYXJnaW4tbGVmdDogNDAlO1xuICAgIGNvbG9yOiB3aGVhdDtcbiAgfSJdfQ== */"
 
 /***/ }),
 
@@ -510,7 +650,7 @@ module.exports = "\nform {\n    border: 10px solid #f1f1f1;\n    padding: 10px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n<div style=\"text-align:center\">\n  <h1>\n    {{nuevoJuego.nombre}}!\n  </h1>\n </div>\n<h2></h2>\n<form name=\"juego\">\n\n   <label>ingrese numero:  </label>  <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n    <h1>{{nuevoJuego.numeroIngresado}}  </h1>\n \n    <h2 [hidden]=\"ocultarVerificar\"><button  *ngIf=\"nuevoJuego.numeroSecreto!=0\" (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar</button></h2>\n \n    <h2><button *ngIf=\"nuevoJuego.numeroSecreto==0 \" (click)=\"generarnumero()\"  class=\"btn btn-info btn-lg\">Nuevo número secreto</button></h2>\n \n    <h2><p *ngIf=\"nuevoJuego.numeroSecreto!=0\" ><i class=\"fa fa-spinner fa-spin\"></i>Esperando que ingrese un número</p></h2>\n\n    <h3 [hidden]=\"!nuevoJuego.gano\">usted adivino el número</h3>\n    <h3 [hidden]=\"nuevoJuego.gano\">usted aún no gano </h3>\n\n\n</form>\n<div id=\"snackbar\">{{Mensajes}}</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<body class=\"fondo\">\n<div style=\"text-align:center\">\n  <h1>\n    {{nuevoJuego.nombre}}!\n  </h1>\n </div>\n<h2></h2>\n<div name=\"juego\" class=\"juego\">\n\n   <label>ingrese numero:  </label>  <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n    <h1>El numero ingresado es: {{aux}}  </h1>\n \n    <h2 [hidden]=\"ocultarVerificar\"><button  *ngIf=\"nuevoJuego.numeroSecreto!=0\" (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar</button></h2>\n \n    <h2><button *ngIf=\"nuevoJuego.numeroSecreto==0 \" (click)=\"generarnumero()\"  class=\"btn btn-info btn-lg\">Nuevo número secreto</button></h2>\n \n    <h2><p *ngIf=\"nuevoJuego.numeroSecreto!=0\" [hidden]=\"ocultarVerificar\"><i class=\"fa fa-spinner fa-spin\"></i>Esperando que ingrese un número</p></h2>\n\n    <h3 [hidden]=\"!nuevoJuego.gano\">usted adivino el número</h3>\n    <h3 [hidden]=\"nuevoJuego.gano\">usted aún no gano </h3>\n\n\n</div>\n<div id=\"snackbar\">{{Mensajes}}</div>\n<br><br><br><br><br><br><br><br><br>\n</body>"
 
 /***/ }),
 
@@ -533,26 +673,31 @@ __webpack_require__.r(__webpack_exports__);
 var AdivinaElNumeroComponent = /** @class */ (function () {
     function AdivinaElNumeroComponent() {
         this.enviarJuego = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        this.nuevoJuego = new _clases_juego_adivina__WEBPACK_IMPORTED_MODULE_2__["JuegoAdivina"]();
-        console.info("numero Secreto:", this.nuevoJuego.numeroSecreto);
+        this.jugador = JSON.parse(localStorage.getItem("Id"));
         this.ocultarVerificar = false;
+        this.arrayResultados = JSON.parse(this.jugador);
+        this.nuevoJuego = new _clases_juego_adivina__WEBPACK_IMPORTED_MODULE_2__["JuegoAdivina"]("Adivina el Numero Secreto", false, this.jugador, 0, "0");
+        console.info("numero Secreto:", this.nuevoJuego.numeroSecreto);
     }
     AdivinaElNumeroComponent.prototype.generarnumero = function () {
         this.nuevoJuego.generarnumero();
-        this.contador = 0;
+        this.intentos = 0;
     };
     AdivinaElNumeroComponent.prototype.verificar = function () {
-        this.contador++;
+        this.aux = this.nuevoJuego.numeroIngresado;
         this.ocultarVerificar = true;
-        console.info("numero Secreto:", this.nuevoJuego.gano);
+        //console.info("numero Secreto:",this.nuevoJuego.gano);  
         if (this.nuevoJuego.verificar()) {
             this.enviarJuego.emit(this.nuevoJuego);
             this.MostarMensaje("Sos un Genio!!!", true);
+            this.nuevoJuego.gano = true;
             this.nuevoJuego.numeroSecreto = 0;
+            this.intentos += 1;
+            this.nuevoJuego.jugador = sessionStorage.getItem('user');
         }
         else {
             var mensaje = void 0;
-            switch (this.contador) {
+            switch (this.intentos) {
                 case 1:
                     mensaje = "No, intento fallido, animo";
                     break;
@@ -560,23 +705,18 @@ var AdivinaElNumeroComponent = /** @class */ (function () {
                     mensaje = "No,Te estaras Acercando???";
                     break;
                 case 3:
-                    mensaje = "No es, Yo crei que la tercera era la vencida.";
-                    break;
-                case 4:
                     mensaje = "No era el  " + this.nuevoJuego.numeroIngresado;
                     break;
-                case 5:
-                    mensaje = " intentos y nada.";
-                    break;
-                case 6:
-                    mensaje = "Afortunado en el amor";
-                    break;
                 default:
-                    mensaje = "Ya le erraste " + this.contador + " veces";
-                    break;
+                    mensaje = "Llegaste a tu limite de intentos, iniciar nuevo juego";
             }
-            this.MostarMensaje("#" + this.contador + " " + mensaje + " ayuda :" + this.nuevoJuego.retornarAyuda());
+            this.intentos++;
+            this.MostarMensaje("#" + this.intentos + " " + mensaje + " ayuda :" + this.nuevoJuego.retornarAyuda());
+            this.nuevoJuego.numeroIngresado = null;
         }
+        this.nuevoJuego.intentos = this.intentos;
+        this.nuevoJuego.guardarLocal();
+        this.nuevoJuego.jugador = sessionStorage.getItem('user');
         console.info("numero Secreto:", this.nuevoJuego.gano);
     };
     AdivinaElNumeroComponent.prototype.MostarMensaje = function (mensaje, ganador) {
@@ -686,7 +826,7 @@ var AdivinaMasListadoComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "form {\r\n    background-color: royalblue;\r\n    text-align: center;\r\n    border: 2px solid wheat;\r\n    padding:0px;\r\n    margin: 0 auto;\r\n    background-position: center;\r\n  \r\n  }\r\n  .estilosContainer{\r\n      background-color: lightblue;\r\n      background-position: center;\r\n      background-repeat: no-repeat;\r\n      position: relative;\r\n      background-size: cover;\r\n      margin:1;\r\n      padding:6%;\r\n  }\r\n  img{\r\n      border-radius: 8px;\r\n      border : white 2px solid;\r\n  }\r\n  input [type=\"radio\"]{\r\n      padding: 5px 15px;\r\n      background: #FF4136;\r\n      border-radius: 2px;\r\n      color: #fff\r\n  }\r\n  h1{\r\n      color: black;\r\n      text-underline-position: above;\r\n  }\r\n  label{\r\n     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;\r\n     font-size: 25px;\r\n  }\r\n  button {\r\n      /*background-color: #4CAF50;*/\r\n      color: white;\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      width: 100%;\r\n  }\r\n  button:hover {\r\n      opacity: 0.8;\r\n  }\r\n  .Verificarbtn {\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      border-radius: 40px;\r\n      border: white 4px solid;\r\n      width: 50%;\r\n      background-color: green;\r\n  }\r\n  .NuevoJuegobtn {\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      border-radius: 40px;\r\n      border: white 4px solid;\r\n      width: 75%;\r\n      background-color: orange;\r\n  }\r\n  #snackbar {\r\n      visibility: hidden;\r\n      min-width: 250px;\r\n      margin-left: -125px;\r\n     \r\n      color: #fff;\r\n      text-align: center;\r\n      border-radius: 2px;\r\n      padding: 16px;\r\n      position: fixed;\r\n      z-index: 1;\r\n      left: 50%;\r\n      bottom: 30px;\r\n      font-size: 17px;\r\n  }\r\n  #snackbar.Ganador {\r\n      background-color: #059F2F;\r\n  }\r\n  #snackbar.Perdedor {\r\n      background-color: #FF0000;\r\n  }\r\n  #snackbar.show {\r\n      visibility: visible;\r\n      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n      animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1wcm92aW5jaWEvYWRpdmluYS1wcm92aW5jaWEuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLDJCQUEyQjtJQUMzQixrQkFBa0I7SUFDbEIsdUJBQXVCO0lBQ3ZCLFdBQVc7SUFDWCxjQUFjO0lBQ2QsMkJBQTJCOztFQUU3QjtFQUNBO01BQ0ksMkJBQTJCO01BQzNCLDJCQUEyQjtNQUMzQiw0QkFBNEI7TUFDNUIsa0JBQWtCO01BSWxCLHNCQUFzQjtNQUN0QixRQUFRO01BQ1IsVUFBVTtFQUNkO0VBQ0E7TUFDSSxrQkFBa0I7TUFDbEIsd0JBQXdCO0VBQzVCO0VBRUE7TUFDSSxpQkFBaUI7TUFDakIsbUJBQW1CO01BQ25CLGtCQUFrQjtNQUNsQjtFQUNKO0VBRUE7TUFDSSxZQUFZO01BQ1osOEJBQThCO0VBQ2xDO0VBRUE7S0FDRyx3RUFBd0U7S0FDeEUsZUFBZTtFQUNsQjtFQUVBO01BQ0ksNkJBQTZCO01BQzdCLFlBQVk7TUFDWixrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsV0FBVztFQUNmO0VBRUE7TUFDSSxZQUFZO0VBQ2hCO0VBRUE7TUFDSSxrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsbUJBQW1CO01BQ25CLHVCQUF1QjtNQUN2QixVQUFVO01BQ1YsdUJBQXVCO0VBQzNCO0VBQ0E7TUFDSSxrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsbUJBQW1CO01BQ25CLHVCQUF1QjtNQUN2QixVQUFVO01BQ1Ysd0JBQXdCO0VBQzVCO0VBRUE7TUFDSSxrQkFBa0I7TUFDbEIsZ0JBQWdCO01BQ2hCLG1CQUFtQjs7TUFFbkIsV0FBVztNQUNYLGtCQUFrQjtNQUNsQixrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLGVBQWU7TUFDZixVQUFVO01BQ1YsU0FBUztNQUNULFlBQVk7TUFDWixlQUFlO0VBQ25CO0VBQ0E7TUFDSSx5QkFBeUI7RUFDN0I7RUFDQTtNQUNJLHlCQUF5QjtFQUM3QjtFQUNBO01BQ0ksbUJBQW1CO01BQ25CLGlEQUFpRDtNQUNqRCx5Q0FBeUM7RUFDN0MiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9hZGl2aW5hLXByb3ZpbmNpYS9hZGl2aW5hLXByb3ZpbmNpYS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZm9ybSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByb3lhbGJsdWU7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBib3JkZXI6IDJweCBzb2xpZCB3aGVhdDtcclxuICAgIHBhZGRpbmc6MHB4O1xyXG4gICAgbWFyZ2luOiAwIGF1dG87XHJcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgXHJcbiAgfVxyXG4gIC5lc3RpbG9zQ29udGFpbmVye1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBsaWdodGJsdWU7XHJcbiAgICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcclxuICAgICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAtd2Via2l0LWJhY2tncm91bmQtc2l6ZSA6IGNvdmVyO1xyXG4gICAgICAtbW96LWJhY2tncm91bmQtc2l6ZSA6IGNvdmVyO1xyXG4gICAgICAtbW96LWJhY2tncm91bmQtc2l6ZSA6IGNvdmVyO1xyXG4gICAgICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xyXG4gICAgICBtYXJnaW46MTtcclxuICAgICAgcGFkZGluZzo2JTtcclxuICB9XHJcbiAgaW1ne1xyXG4gICAgICBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiAgICAgIGJvcmRlciA6IHdoaXRlIDJweCBzb2xpZDtcclxuICB9XHJcbiAgXHJcbiAgaW5wdXQgW3R5cGU9XCJyYWRpb1wiXXtcclxuICAgICAgcGFkZGluZzogNXB4IDE1cHg7XHJcbiAgICAgIGJhY2tncm91bmQ6ICNGRjQxMzY7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDJweDtcclxuICAgICAgY29sb3I6ICNmZmZcclxuICB9XHJcbiAgXHJcbiAgaDF7XHJcbiAgICAgIGNvbG9yOiBibGFjaztcclxuICAgICAgdGV4dC11bmRlcmxpbmUtcG9zaXRpb246IGFib3ZlO1xyXG4gIH1cclxuICBcclxuICBsYWJlbHtcclxuICAgICBmb250LWZhbWlseTogJ0ZyYW5rbGluIEdvdGhpYyBNZWRpdW0nLCAnQXJpYWwgTmFycm93JywgQXJpYWwsIHNhbnMtc2VyaWY7XHJcbiAgICAgZm9udC1zaXplOiAyNXB4O1xyXG4gIH1cclxuICBcclxuICBidXR0b24ge1xyXG4gICAgICAvKmJhY2tncm91bmQtY29sb3I6ICM0Q0FGNTA7Ki9cclxuICAgICAgY29sb3I6IHdoaXRlO1xyXG4gICAgICBwYWRkaW5nOiAxNHB4IDIwcHg7XHJcbiAgICAgIG1hcmdpbjogOHB4IDA7XHJcbiAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICB9XHJcbiAgXHJcbiAgYnV0dG9uOmhvdmVyIHtcclxuICAgICAgb3BhY2l0eTogMC44O1xyXG4gIH1cclxuICBcclxuICAuVmVyaWZpY2FyYnRuIHtcclxuICAgICAgcGFkZGluZzogMTRweCAyMHB4O1xyXG4gICAgICBtYXJnaW46IDhweCAwO1xyXG4gICAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgYm9yZGVyLXJhZGl1czogNDBweDtcclxuICAgICAgYm9yZGVyOiB3aGl0ZSA0cHggc29saWQ7XHJcbiAgICAgIHdpZHRoOiA1MCU7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xyXG4gIH1cclxuICAuTnVldm9KdWVnb2J0biB7XHJcbiAgICAgIHBhZGRpbmc6IDE0cHggMjBweDtcclxuICAgICAgbWFyZ2luOiA4cHggMDtcclxuICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDQwcHg7XHJcbiAgICAgIGJvcmRlcjogd2hpdGUgNHB4IHNvbGlkO1xyXG4gICAgICB3aWR0aDogNzUlO1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBvcmFuZ2U7XHJcbiAgfVxyXG4gIFxyXG4gICNzbmFja2JhciB7XHJcbiAgICAgIHZpc2liaWxpdHk6IGhpZGRlbjtcclxuICAgICAgbWluLXdpZHRoOiAyNTBweDtcclxuICAgICAgbWFyZ2luLWxlZnQ6IC0xMjVweDtcclxuICAgICBcclxuICAgICAgY29sb3I6ICNmZmY7XHJcbiAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgICAgYm9yZGVyLXJhZGl1czogMnB4O1xyXG4gICAgICBwYWRkaW5nOiAxNnB4O1xyXG4gICAgICBwb3NpdGlvbjogZml4ZWQ7XHJcbiAgICAgIHotaW5kZXg6IDE7XHJcbiAgICAgIGxlZnQ6IDUwJTtcclxuICAgICAgYm90dG9tOiAzMHB4O1xyXG4gICAgICBmb250LXNpemU6IDE3cHg7XHJcbiAgfVxyXG4gICNzbmFja2Jhci5HYW5hZG9yIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzA1OUYyRjtcclxuICB9XHJcbiAgI3NuYWNrYmFyLlBlcmRlZG9yIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI0ZGMDAwMDtcclxuICB9XHJcbiAgI3NuYWNrYmFyLnNob3cge1xyXG4gICAgICB2aXNpYmlsaXR5OiB2aXNpYmxlO1xyXG4gICAgICAtd2Via2l0LWFuaW1hdGlvbjogZmFkZWluIDAuNXMsIGZhZGVvdXQgMC41cyAyLjVzO1xyXG4gICAgICBhbmltYXRpb246IGZhZGVpbiAwLjVzLCBmYWRlb3V0IDAuNXMgMi41cztcclxuICB9Il19 */"
+module.exports = "form {\r\n  \r\n    text-align: center;\r\n    \r\n    padding:0px;\r\n    margin: 0 auto;\r\n    background-position: center;\r\n  \r\n  }\r\n  .estilosContainer{\r\n      background-color: lightblue;\r\n      background-position: center;\r\n      background-repeat: no-repeat;\r\n      position: relative;\r\n      background-size: cover;\r\n      margin:1;\r\n      padding:6%;\r\n  }\r\n  img{\r\n      border-radius: 8px;\r\n      border : white 2px solid;\r\n  }\r\n  input [type=\"radio\"]{\r\n      padding: 5px 15px;\r\n      background: #FF4136;\r\n      border-radius: 2px;\r\n      color: #fff\r\n  }\r\n  h1{\r\n      color: yellow;\r\n      text-underline-position: above;\r\n  }\r\n  label{\r\n     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;\r\n     font-size: 25px;\r\n  }\r\n  button {\r\n      /*background-color: #4CAF50;*/\r\n      color: white;\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      width: 50%;\r\n  }\r\n  button:hover {\r\n      opacity: 0.8;\r\n  }\r\n  .Verificarbtn {\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      border-radius: 40px;\r\n      border: white 4px solid;\r\n      width: 50%;\r\n      background-color: green;\r\n  }\r\n  .NuevoJuegobtn {\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      border-radius: 40px;\r\n      border: white 4px solid;\r\n      width: 50%;\r\n      background-color: orange;\r\n  }\r\n  #snackbar {\r\n      visibility: hidden;\r\n      min-width: 250px;\r\n      margin-left: -125px;\r\n     \r\n      color: #fff;\r\n      text-align: center;\r\n      border-radius: 2px;\r\n      padding: 16px;\r\n      position: fixed;\r\n      z-index: 1;\r\n      left: 50%;\r\n      bottom: 30px;\r\n      font-size: 17px;\r\n  }\r\n  #snackbar.Ganador {\r\n      background-color: #059F2F;\r\n  }\r\n  #snackbar.Perdedor {\r\n      background-color: #FF0000;\r\n  }\r\n  #snackbar.show {\r\n      visibility: visible;\r\n      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n      animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n  }\r\n  .fondo{\r\n\r\n    background-image: url('slider-bg-2.jpg');\r\n    margin-top: -60px;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1wcm92aW5jaWEvYWRpdmluYS1wcm92aW5jaWEuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7SUFFSSxrQkFBa0I7O0lBRWxCLFdBQVc7SUFDWCxjQUFjO0lBQ2QsMkJBQTJCOztFQUU3QjtFQUNBO01BQ0ksMkJBQTJCO01BQzNCLDJCQUEyQjtNQUMzQiw0QkFBNEI7TUFDNUIsa0JBQWtCO01BSWxCLHNCQUFzQjtNQUN0QixRQUFRO01BQ1IsVUFBVTtFQUNkO0VBQ0E7TUFDSSxrQkFBa0I7TUFDbEIsd0JBQXdCO0VBQzVCO0VBRUE7TUFDSSxpQkFBaUI7TUFDakIsbUJBQW1CO01BQ25CLGtCQUFrQjtNQUNsQjtFQUNKO0VBRUE7TUFDSSxhQUFhO01BQ2IsOEJBQThCO0VBQ2xDO0VBRUE7S0FDRyx3RUFBd0U7S0FDeEUsZUFBZTtFQUNsQjtFQUVBO01BQ0ksNkJBQTZCO01BQzdCLFlBQVk7TUFDWixrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsVUFBVTtFQUNkO0VBRUE7TUFDSSxZQUFZO0VBQ2hCO0VBRUE7TUFDSSxrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsbUJBQW1CO01BQ25CLHVCQUF1QjtNQUN2QixVQUFVO01BQ1YsdUJBQXVCO0VBQzNCO0VBQ0E7TUFDSSxrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLFlBQVk7TUFDWixlQUFlO01BQ2YsbUJBQW1CO01BQ25CLHVCQUF1QjtNQUN2QixVQUFVO01BQ1Ysd0JBQXdCO0VBQzVCO0VBRUE7TUFDSSxrQkFBa0I7TUFDbEIsZ0JBQWdCO01BQ2hCLG1CQUFtQjs7TUFFbkIsV0FBVztNQUNYLGtCQUFrQjtNQUNsQixrQkFBa0I7TUFDbEIsYUFBYTtNQUNiLGVBQWU7TUFDZixVQUFVO01BQ1YsU0FBUztNQUNULFlBQVk7TUFDWixlQUFlO0VBQ25CO0VBQ0E7TUFDSSx5QkFBeUI7RUFDN0I7RUFDQTtNQUNJLHlCQUF5QjtFQUM3QjtFQUNBO01BQ0ksbUJBQW1CO01BQ25CLGlEQUFpRDtNQUNqRCx5Q0FBeUM7RUFDN0M7RUFFQTs7SUFFRSx3Q0FBdUU7SUFDdkUsaUJBQWlCO0VBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50ZXMvYWRpdmluYS1wcm92aW5jaWEvYWRpdmluYS1wcm92aW5jaWEuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImZvcm0ge1xyXG4gIFxyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgXHJcbiAgICBwYWRkaW5nOjBweDtcclxuICAgIG1hcmdpbjogMCBhdXRvO1xyXG4gICAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyO1xyXG4gIFxyXG4gIH1cclxuICAuZXN0aWxvc0NvbnRhaW5lcntcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRibHVlO1xyXG4gICAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XHJcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgLXdlYmtpdC1iYWNrZ3JvdW5kLXNpemUgOiBjb3ZlcjtcclxuICAgICAgLW1vei1iYWNrZ3JvdW5kLXNpemUgOiBjb3ZlcjtcclxuICAgICAgLW1vei1iYWNrZ3JvdW5kLXNpemUgOiBjb3ZlcjtcclxuICAgICAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcclxuICAgICAgbWFyZ2luOjE7XHJcbiAgICAgIHBhZGRpbmc6NiU7XHJcbiAgfVxyXG4gIGltZ3tcclxuICAgICAgYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gICAgICBib3JkZXIgOiB3aGl0ZSAycHggc29saWQ7XHJcbiAgfVxyXG4gIFxyXG4gIGlucHV0IFt0eXBlPVwicmFkaW9cIl17XHJcbiAgICAgIHBhZGRpbmc6IDVweCAxNXB4O1xyXG4gICAgICBiYWNrZ3JvdW5kOiAjRkY0MTM2O1xyXG4gICAgICBib3JkZXItcmFkaXVzOiAycHg7XHJcbiAgICAgIGNvbG9yOiAjZmZmXHJcbiAgfVxyXG4gIFxyXG4gIGgxe1xyXG4gICAgICBjb2xvcjogeWVsbG93O1xyXG4gICAgICB0ZXh0LXVuZGVybGluZS1wb3NpdGlvbjogYWJvdmU7XHJcbiAgfVxyXG4gIFxyXG4gIGxhYmVse1xyXG4gICAgIGZvbnQtZmFtaWx5OiAnRnJhbmtsaW4gR290aGljIE1lZGl1bScsICdBcmlhbCBOYXJyb3cnLCBBcmlhbCwgc2Fucy1zZXJpZjtcclxuICAgICBmb250LXNpemU6IDI1cHg7XHJcbiAgfVxyXG4gIFxyXG4gIGJ1dHRvbiB7XHJcbiAgICAgIC8qYmFja2dyb3VuZC1jb2xvcjogIzRDQUY1MDsqL1xyXG4gICAgICBjb2xvcjogd2hpdGU7XHJcbiAgICAgIHBhZGRpbmc6IDE0cHggMjBweDtcclxuICAgICAgbWFyZ2luOiA4cHggMDtcclxuICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgIHdpZHRoOiA1MCU7XHJcbiAgfVxyXG4gIFxyXG4gIGJ1dHRvbjpob3ZlciB7XHJcbiAgICAgIG9wYWNpdHk6IDAuODtcclxuICB9XHJcbiAgXHJcbiAgLlZlcmlmaWNhcmJ0biB7XHJcbiAgICAgIHBhZGRpbmc6IDE0cHggMjBweDtcclxuICAgICAgbWFyZ2luOiA4cHggMDtcclxuICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDQwcHg7XHJcbiAgICAgIGJvcmRlcjogd2hpdGUgNHB4IHNvbGlkO1xyXG4gICAgICB3aWR0aDogNTAlO1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcclxuICB9XHJcbiAgLk51ZXZvSnVlZ29idG4ge1xyXG4gICAgICBwYWRkaW5nOiAxNHB4IDIwcHg7XHJcbiAgICAgIG1hcmdpbjogOHB4IDA7XHJcbiAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICBib3JkZXItcmFkaXVzOiA0MHB4O1xyXG4gICAgICBib3JkZXI6IHdoaXRlIDRweCBzb2xpZDtcclxuICAgICAgd2lkdGg6IDUwJTtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogb3JhbmdlO1xyXG4gIH1cclxuICBcclxuICAjc25hY2tiYXIge1xyXG4gICAgICB2aXNpYmlsaXR5OiBoaWRkZW47XHJcbiAgICAgIG1pbi13aWR0aDogMjUwcHg7XHJcbiAgICAgIG1hcmdpbi1sZWZ0OiAtMTI1cHg7XHJcbiAgICAgXHJcbiAgICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDJweDtcclxuICAgICAgcGFkZGluZzogMTZweDtcclxuICAgICAgcG9zaXRpb246IGZpeGVkO1xyXG4gICAgICB6LWluZGV4OiAxO1xyXG4gICAgICBsZWZ0OiA1MCU7XHJcbiAgICAgIGJvdHRvbTogMzBweDtcclxuICAgICAgZm9udC1zaXplOiAxN3B4O1xyXG4gIH1cclxuICAjc25hY2tiYXIuR2FuYWRvciB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICMwNTlGMkY7XHJcbiAgfVxyXG4gICNzbmFja2Jhci5QZXJkZWRvciB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNGRjAwMDA7XHJcbiAgfVxyXG4gICNzbmFja2Jhci5zaG93IHtcclxuICAgICAgdmlzaWJpbGl0eTogdmlzaWJsZTtcclxuICAgICAgLXdlYmtpdC1hbmltYXRpb246IGZhZGVpbiAwLjVzLCBmYWRlb3V0IDAuNXMgMi41cztcclxuICAgICAgYW5pbWF0aW9uOiBmYWRlaW4gMC41cywgZmFkZW91dCAwLjVzIDIuNXM7XHJcbiAgfVxyXG5cclxuICAuZm9uZG97XHJcblxyXG4gICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4uLy4uLy4uL2RvY3MvYXNzZXRzL2ltYWdlbmVzL3NsaWRlci1iZy0yLmpwZ1wiKTtcclxuICAgIG1hcmdpbi10b3A6IC02MHB4O1xyXG4gIH0iXX0= */"
 
 /***/ }),
 
@@ -697,7 +837,7 @@ module.exports = "form {\r\n    background-color: royalblue;\r\n    text-align: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container estilosContainer\">\n  <form>\n      <h1>{{nuevoJuego.nombre}}</h1>\n      <br><br>\n    <img *ngIf=\"nuevoJuego.elementoAdivinar != null\" src=\"../../../assets/imagenes/provincias/{{nuevoJuego.elementoAdivinar['path']}}\" height=\"325px\" width=\"325px\">\n    <br><br>\n    <div *ngFor=\"let opciones of nuevoJuego.opcionesMostradas\">\n    <input type=\"radio\" name=\"nuevoJuego.opcionIngresada\" [(ngModel)]=\"nuevoJuego.opcionIngresada\" value=\"{{opciones}}\"><label>{{opciones}}</label>\n    <br><br>\n  </div>\n  <button class=\"NuevoJuegobtn\" *ngIf=\"nuevoJuego.elementoAdivinar == null\" (click)=\"generar()\">Nuevo Juego</button>\n  <button class=\"Verificarbtn\" [hidden]=\"ocultarVerificar\" *ngIf=\"nuevoJuego.elementoAdivinar != null\" (click)=\"verificar()\">Verificar</button>\n  </form>\n  <div id=\"snackbar\">{{Mensajes}}</div>\n  <br><br><br><br><br><br><br><br>\n  </div>"
+module.exports = "<div class=\"fondo\">\n  <form>\n      <h1>{{nombre}}</h1>\n      <br><br>\n    <img *ngIf=\"nuevoJuego.elementoAdivinar != null\" src=\"./assets/imagenes/provincias/{{nuevoJuego.elementoAdivinar['path']}}\" height=\"325px\" width=\"325px\">\n    <br><br>\n    <div *ngFor=\"let opciones of nuevoJuego.opcionesMostradas\">\n    <input type=\"radio\" name=\"nuevoJuego.opcionIngresada\" [(ngModel)]=\"nuevoJuego.opcionIngresada\" value=\"{{opciones}}\"><label>{{opciones}}</label>\n    <br><br>\n  </div>\n  <button class=\"NuevoJuegobtn\" *ngIf=\"nuevoJuego.elementoAdivinar == null\" (click)=\"generar()\">Nuevo Juego</button>\n  <button class=\"Verificarbtn\" [hidden]=\"ocultarVerificar\" *ngIf=\"nuevoJuego.elementoAdivinar != null\" (click)=\"verificar()\">Verificar</button>\n  </form>\n  <div id=\"snackbar\">{{Mensajes}}</div>\n  <br><br><br><br><br><br><br><br><br><br><br>\n  </div>"
 
 /***/ }),
 
@@ -719,6 +859,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var AdivinaProvinciaComponent = /** @class */ (function () {
     function AdivinaProvinciaComponent() {
+        this.nombre = "Adivina la Provincia";
         this.jugador = JSON.parse(localStorage.getItem("Id"));
         this.nuevoJuego = new _clases_juego_adivina_provincia__WEBPACK_IMPORTED_MODULE_2__["JuegoAdivinaProvincia"]("Adivina La Provincia", false, this.jugador, 0, "00");
         this.ocultarVerificar = true;
@@ -801,7 +942,7 @@ var AdivinaProvinciaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudGVzL2FnaWxpZGFkLWFyaXRtZXRpY2EvYWdpbGlkYWQtYXJpdG1ldGljYS5jb21wb25lbnQuY3NzIn0= */"
+module.exports = "#snackbar {\r\n    visibility: hidden;\r\n    min-width: 250px;\r\n    margin-left: -125px;\r\n   \r\n    color: #fff;\r\n    text-align: center;\r\n    border-radius: 2px;\r\n    padding: 16px;\r\n    position: fixed;\r\n    z-index: 1;\r\n    left: 50%;\r\n    bottom: 30px;\r\n    font-size: 17px;\r\n}\r\n#snackbar.Ganador {\r\n    background-color: #059F2F;\r\n}\r\n#snackbar.Perdedor {\r\n    background-color: #FF0000;\r\n}\r\n#snackbar.show {\r\n    visibility: visible;\r\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n}\r\n.fondo{\r\n\r\n    background-image: url('slider-bg-2.jpg');\r\n    margin-top: -60px;\r\n    margin-bottom: -90px;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvYWdpbGlkYWQtYXJpdG1ldGljYS9hZ2lsaWRhZC1hcml0bWV0aWNhLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxrQkFBa0I7SUFDbEIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjs7SUFFbkIsV0FBVztJQUNYLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsYUFBYTtJQUNiLGVBQWU7SUFDZixVQUFVO0lBQ1YsU0FBUztJQUNULFlBQVk7SUFDWixlQUFlO0FBQ25CO0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7QUFDQTtJQUNJLHlCQUF5QjtBQUM3QjtBQUNBO0lBQ0ksbUJBQW1CO0lBQ25CLGlEQUFpRDtJQUNqRCx5Q0FBeUM7QUFDN0M7QUFFQTs7SUFFSSx3Q0FBdUU7SUFDdkUsaUJBQWlCO0lBQ2pCLG9CQUFvQjtFQUN0QiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudGVzL2FnaWxpZGFkLWFyaXRtZXRpY2EvYWdpbGlkYWQtYXJpdG1ldGljYS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3NuYWNrYmFyIHtcclxuICAgIHZpc2liaWxpdHk6IGhpZGRlbjtcclxuICAgIG1pbi13aWR0aDogMjUwcHg7XHJcbiAgICBtYXJnaW4tbGVmdDogLTEyNXB4O1xyXG4gICBcclxuICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMnB4O1xyXG4gICAgcGFkZGluZzogMTZweDtcclxuICAgIHBvc2l0aW9uOiBmaXhlZDtcclxuICAgIHotaW5kZXg6IDE7XHJcbiAgICBsZWZ0OiA1MCU7XHJcbiAgICBib3R0b206IDMwcHg7XHJcbiAgICBmb250LXNpemU6IDE3cHg7XHJcbn1cclxuI3NuYWNrYmFyLkdhbmFkb3Ige1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzA1OUYyRjtcclxufVxyXG4jc25hY2tiYXIuUGVyZGVkb3Ige1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI0ZGMDAwMDtcclxufVxyXG4jc25hY2tiYXIuc2hvdyB7XHJcbiAgICB2aXNpYmlsaXR5OiB2aXNpYmxlO1xyXG4gICAgLXdlYmtpdC1hbmltYXRpb246IGZhZGVpbiAwLjVzLCBmYWRlb3V0IDAuNXMgMi41cztcclxuICAgIGFuaW1hdGlvbjogZmFkZWluIDAuNXMsIGZhZGVvdXQgMC41cyAyLjVzO1xyXG59XHJcblxyXG4uZm9uZG97XHJcblxyXG4gICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4uLy4uLy4uL2RvY3MvYXNzZXRzL2ltYWdlbmVzL3NsaWRlci1iZy0yLmpwZ1wiKTtcclxuICAgIG1hcmdpbi10b3A6IC02MHB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogLTkwcHg7XHJcbiAgfSJdfQ== */"
 
 /***/ }),
 
@@ -812,7 +953,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<!-- index.html -->\n\n\n<form name=\"juego\">\n<ul>\n   <li>\n   Primer número: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n  \n  </li>\n  <li>\n   Operador: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n   Segundo número: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n    Respuesta: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n     \n   </li>\n  <li>\n    <h2 [hidden]=\"ocultarVerificar\" ><button (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar {{Tiempo}} </button></h2>\n  </li>\n  <li>\n    <h2 [hidden]=\"!ocultarVerificar\"><button  (click)=\"NuevoJuego()\"  class=\"btn btn-info btn-lg\">Nuevo</button></h2>\n  </li>\n  <li>\n    <h2><p><i class=\"fa fa-spinner fa-spin\"></i>Esperando numero...</p></h2>\n\n    <h3 [hidden]=\"!nuevoJuego.gano\">usted adivino el número</h3>\n    <h3 [hidden]=\"nuevoJuego.gano\">usted aún no gano </h3>\n  </li>\n</ul>\n\n</form>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<!-- index.html -->\n\n<div class=\"fondo\">\n<div name=\"juego\" >\n  <h1 style=\"color:white; text-align:center\">Agilidad Aritmetica</h1>\n<ul style=\"list-style:none;margin-left: 417px; color:white;\">\n   <li>\n   Primer número: <input [(ngModel)]=\"nuevoJuego.primerNumero\" placeholder=\"Primer Numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n  \n  </li>\n  <li>\n   Operador: <input [(ngModel)]=\"nuevoJuego.operador\" placeholder=\"Operador\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n   Segundo número: <input [(ngModel)]=\"nuevoJuego.segundoNumero\" placeholder=\"Segundo Numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n    Respuesta: <input [(ngModel)]=\"nuevoJuego.resultadoUsuario\" placeholder=\"ingrese Respuesta\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n     \n   </li>\n  <li>\n    <h2 [hidden]=\"ocultarVerificar\" ><button (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar {{Tiempo}} </button></h2>\n  </li>\n  <li>\n    <h2 [hidden]=\"!ocultarVerificar\"><button  (click)=\"NuevoJuego()\"  class=\"btn btn-info btn-lg\">Nuevo</button></h2>\n  </li>\n  <li [hidden]=\"ocultarVerificar\">\n    <h2><p><i class=\"fa fa-spinner fa-spin\" ></i>Esperando numero...</p></h2>\n  </li>\n</ul>\n\n</div>\n\n<div id=\"snackbar\">{{Mensajes}}</div>\n  <br><br><br><br><br><br><br><br>\n</div>"
 
 /***/ }),
 
@@ -835,9 +976,12 @@ __webpack_require__.r(__webpack_exports__);
 var AgilidadAritmeticaComponent = /** @class */ (function () {
     function AgilidadAritmeticaComponent() {
         this.enviarJuego = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.jugador = JSON.parse(localStorage.getItem("Id"));
         this.ocultarVerificar = true;
         this.Tiempo = 5;
-        this.nuevoJuego = new _clases_juego_agilidad__WEBPACK_IMPORTED_MODULE_2__["JuegoAgilidad"]();
+        this.arrayResultados = JSON.parse(this.jugador);
+        this.intentos = 0;
+        this.nuevoJuego = new _clases_juego_agilidad__WEBPACK_IMPORTED_MODULE_2__["JuegoAgilidad"]("AgilidadAritmetica", false, this.jugador, 0, "00");
         console.info("Inicio agilidad");
     }
     AgilidadAritmeticaComponent.prototype.ngOnInit = function () {
@@ -845,6 +989,8 @@ var AgilidadAritmeticaComponent = /** @class */ (function () {
     AgilidadAritmeticaComponent.prototype.NuevoJuego = function () {
         var _this = this;
         this.ocultarVerificar = false;
+        this.nuevoJuego.generar();
+        this.nuevoJuego.resultadoUsuario = null;
         this.repetidor = setInterval(function () {
             _this.Tiempo--;
             console.log("llego", _this.Tiempo);
@@ -859,6 +1005,39 @@ var AgilidadAritmeticaComponent = /** @class */ (function () {
     AgilidadAritmeticaComponent.prototype.verificar = function () {
         this.ocultarVerificar = false;
         clearInterval(this.repetidor);
+        if (this.nuevoJuego.verificar()) {
+            this.MostarMensaje("Correcto. Acertaste el resultado!!", true);
+            this.nuevoJuego.gano = true;
+            this.nuevoJuego.nombre = "Agilidad Aritmetica";
+            this.nuevoJuego.jugador = sessionStorage.getItem('user');
+        }
+        else {
+            this.nuevoJuego.gano = false;
+            this.nuevoJuego.nombre = "Agilidad Aritmetica";
+            this.nuevoJuego.jugador = sessionStorage.getItem('user');
+            this.MostarMensaje("Fallaste. El calculo es incorrecto!!", false);
+        }
+        this.nuevoJuego.guardarLocal();
+        //Despues de verificar si gane o no, reinicio el juego!!
+        this.Tiempo = 5;
+        this.ocultarVerificar = true;
+    };
+    AgilidadAritmeticaComponent.prototype.MostarMensaje = function (mensaje, ganador) {
+        if (mensaje === void 0) { mensaje = "este es el mensaje"; }
+        if (ganador === void 0) { ganador = false; }
+        this.Mensajes = mensaje;
+        var x = document.getElementById("snackbar");
+        if (ganador) {
+            x.className = "show Ganador";
+        }
+        else {
+            x.className = "show Perdedor";
+        }
+        var modelo = this;
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 3000);
+        console.info("objeto", x);
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
@@ -1014,7 +1193,7 @@ module.exports = "/* =================================\n------------------------
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\t<!-- Header section -->\n\t<header class=\"header-section\">\n      <div class=\"header-warp\">\n        <div class=\"header-bar-warp d-flex\">\n          <div>\n            <h2 class=\"titulo\">\n           Mi Sala de Juegos</h2>\n        </div>\n          <!-- site logo -->\t\t\t\t\n          <nav class=\"top-nav-area w-100\">\n            <div class=\"user-panel\" >\n              <div *ngIf=\"!logueado\" >\n              <div ><a routerLink=\"/Login\" >Ingresá</a></div>\n              <div ><a routerLink=\"/Registro\" >Registrate</a></div>\n            </div>\n              <div *ngIf=\"logueado\"><a routerLink=\"/\" (click)=\"cerrarSesion()\" >Cerrar sesion</a></div>\n            </div>\n            <!-- Menu -->\n            <ul class=\"main-menu primary-menu\">\n              <li><a routerLink=\"/\">Inicio</a></li>\n              <li><a>Juegos</a>\n                <ul class=\"sub-menu\">\n                  <li><a routerLink=\"/Juegos/Agilidad\" >Velocidad Aritmetica</a></li>\n                  <li><a routerLink=\"/Juegos/\">Piedra, Papel o Tijera</a></li>\n                  <li><a routerLink=\"/Juegos/Adivina\">Numero Secreto</a></li>\n                  <li><a routerLink=\"/Juegos/\">Anagrama</a></li>\n                  <li><a routerLink=\"/Juegos/AdivinaProvincia\">Adivina Provincia</a></li>\n                </ul>\n              </li>\n              <li><a routerLink=\"/Listado\">Listado de Resultados</a>\n              <li><a>Sobre Mi</a>\n                <ul class=\"sub-menu\">\n                  <li><a href=\"https://github.com/facundoislas\" target=\"blank\">En Github</a></li>\n                  <li><a routerLink=\"/QuienSoy\">Sobre Facundo Islas</a></li>\n                </ul>\n              </li>\n              \n              \n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n    <!-- Header section end -->"
+module.exports = "\t<!-- Header section -->\n\t<header class=\"header-section\">\n      <div class=\"header-warp\">\n        <div class=\"header-bar-warp d-flex\">\n          <div>\n            <h2 class=\"titulo\">\n           Mi Sala de Juegos</h2>\n        </div>\n          <!-- site logo -->\t\t\t\t\n          <nav class=\"top-nav-area w-100\">\n            <div class=\"user-panel\" >\n              <div *ngIf=\"!logueado\" >\n              <div ><a routerLink=\"/Login\" >Ingresá</a></div>\n              <div ><a routerLink=\"/Registro\" >Registrate</a></div>\n            </div>\n              <div *ngIf=\"logueado\"><a routerLink=\"/\" (click)=\"cerrarSesion()\" >Cerrar sesion</a></div>\n            </div>\n            <!-- Menu -->\n            <ul class=\"main-menu primary-menu\">\n              <li><a routerLink=\"/\">Inicio</a></li>\n              <li><a>Juegos</a>\n                <ul class=\"sub-menu\">\n                  <li><a routerLink=\"/Juegos/Agilidad\" >Velocidad Aritmetica</a></li>\n                  <li><a routerLink=\"/Juegos/PiedraPapelTijera\">Piedra, Papel o Tijera</a></li>\n                  <li><a routerLink=\"/Juegos/Adivina\">Numero Secreto</a></li>\n                  <li><a routerLink=\"/Juegos/\">Anagrama</a></li>\n                  <li><a routerLink=\"/Juegos/AdivinaProvincia\">Adivina Provincia</a></li>\n                </ul>\n              </li>\n              <li><a routerLink=\"/Listado\">Listado de Resultados</a>\n              <li><a>Sobre Mi</a>\n                <ul class=\"sub-menu\">\n                  <li><a href=\"https://github.com/facundoislas\" target=\"blank\">En Github</a></li>\n                  <li><a routerLink=\"/QuienSoy\">Sobre Facundo Islas</a></li>\n                </ul>\n              </li>\n              \n              \n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n    <!-- Header section end -->"
 
 /***/ }),
 
@@ -1151,7 +1330,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Footer -->\n<footer class=\"page-footer font-small blue\" style=\"background-color: rgb(4, 23, 61); height: 30%;\">\n\n  <!-- Copyright -->\n  <div class=\"footer-copyright text-center py-3\"style=\"color:aliceblue\">© 2019 Copyright:\n    <h3 class=\"h3\" style=\"color:aliceblue ;font-family: monospace\"> Facundo Islas</h3>\n  </div>\n  <!-- Copyright -->\n\n</footer>\n<!-- Footer -->"
+module.exports = "<!-- Footer -->\n<footer class=\"page-footer font-small blue\" style=\"background-color: rgb(4, 23, 61); height: 30%; \">\n\n  <!-- Copyright -->\n  <div class=\"footer-copyright text-center py-3\"style=\"color:aliceblue; \">© 2019 Copyright:\n    <h3 class=\"h3\" style=\"color:aliceblue ;font-family: monospace\"> Facundo Islas</h3>\n  </div>\n  <!-- Copyright -->\n\n</footer>\n<!-- Footer -->"
 
 /***/ }),
 
@@ -1319,7 +1498,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<app-menu></app-menu>\n<div style=\"text-align:center\">\n  <h1>\n   Sala de Juegos\n  </h1>\n </div>\n <router-outlet></router-outlet>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n <router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -1699,7 +1878,7 @@ var ListadosComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\nform {\n    border: 10px solid #f1f1f1;\n    padding: 10px;\n    background:gray;\n}\n\ninput[type=text], input[type=password] {\n    width: 100%;\n    padding: 12px 20px;\n    margin: 8px 0;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-sizing: border-box;\n}\n\nbutton {\n    background-color: #4CAF50;\n    color: white;\n    padding: 14px 20px;\n    margin: 8px 0;\n    border: none;\n    cursor: pointer;\n    width: 100%;\n}\n\nbutton:hover {\n    opacity: 0.8;\n}\n\n.cancelbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #f44336;\n}\n\n.aceptbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #3664F4;\n}\n\n.imgcontainer {\n    text-align: center;\n    margin: 24px 0 12px 0;\n}\n\nimg.avatar {\n    width: 40%;\n    border-radius: 50%;\n}\n\n.container {\n    padding: 16px;\n}\n\nspan.psw {\n    float: right;\n    padding-top: 16px;\n}\n\n/* Change styles for span and cancel button on extra small screens */\n\n@media screen and (max-width: 300px) {\n    span.psw {\n       display: block;\n       float: none;\n    }\n    .cancelbtn {\n       width: 100%;\n    }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvbG9naW4vbG9naW4uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSwwQkFBMEI7SUFDMUIsYUFBYTtJQUNiLGVBQWU7QUFDbkI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixxQkFBcUI7SUFDckIsc0JBQXNCO0lBQ3RCLHNCQUFzQjtBQUMxQjs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGFBQWE7SUFDYixZQUFZO0lBQ1osZUFBZTtJQUNmLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLHlCQUF5QjtBQUM3Qjs7QUFDQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7SUFDbEIseUJBQXlCO0FBQzdCOztBQUNBO0lBQ0ksa0JBQWtCO0lBQ2xCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLFVBQVU7SUFDVixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLGlCQUFpQjtBQUNyQjs7QUFFQSxvRUFBb0U7O0FBQ3BFO0lBQ0k7T0FDRyxjQUFjO09BQ2QsV0FBVztJQUNkO0lBQ0E7T0FDRyxXQUFXO0lBQ2Q7QUFDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudGVzL2xvZ2luL2xvZ2luLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbmZvcm0ge1xuICAgIGJvcmRlcjogMTBweCBzb2xpZCAjZjFmMWYxO1xuICAgIHBhZGRpbmc6IDEwcHg7XG4gICAgYmFja2dyb3VuZDpncmF5O1xufVxuXG5pbnB1dFt0eXBlPXRleHRdLCBpbnB1dFt0eXBlPXBhc3N3b3JkXSB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgcGFkZGluZzogMTJweCAyMHB4O1xuICAgIG1hcmdpbjogOHB4IDA7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAgIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7XG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbn1cblxuYnV0dG9uIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNENBRjUwO1xuICAgIGNvbG9yOiB3aGl0ZTtcbiAgICBwYWRkaW5nOiAxNHB4IDIwcHg7XG4gICAgbWFyZ2luOiA4cHggMDtcbiAgICBib3JkZXI6IG5vbmU7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIHdpZHRoOiAxMDAlO1xufVxuXG5idXR0b246aG92ZXIge1xuICAgIG9wYWNpdHk6IDAuODtcbn1cblxuLmNhbmNlbGJ0biB7XG4gICAgd2lkdGg6IGF1dG87XG4gICAgcGFkZGluZzogMTBweCAxOHB4O1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNmNDQzMzY7XG59XG4uYWNlcHRidG4ge1xuICAgIHdpZHRoOiBhdXRvO1xuICAgIHBhZGRpbmc6IDEwcHggMThweDtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzY2NEY0O1xufVxuLmltZ2NvbnRhaW5lciB7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIG1hcmdpbjogMjRweCAwIDEycHggMDtcbn1cblxuaW1nLmF2YXRhciB7XG4gICAgd2lkdGg6IDQwJTtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG59XG5cbi5jb250YWluZXIge1xuICAgIHBhZGRpbmc6IDE2cHg7XG59XG5cbnNwYW4ucHN3IHtcbiAgICBmbG9hdDogcmlnaHQ7XG4gICAgcGFkZGluZy10b3A6IDE2cHg7XG59XG5cbi8qIENoYW5nZSBzdHlsZXMgZm9yIHNwYW4gYW5kIGNhbmNlbCBidXR0b24gb24gZXh0cmEgc21hbGwgc2NyZWVucyAqL1xuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMzAwcHgpIHtcbiAgICBzcGFuLnBzdyB7XG4gICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgZmxvYXQ6IG5vbmU7XG4gICAgfVxuICAgIC5jYW5jZWxidG4ge1xuICAgICAgIHdpZHRoOiAxMDAlO1xuICAgIH1cbn0iXX0= */"
+module.exports = "\nform {\n  \n    padding: 10px;\n}\n\ninput[type=text], input[type=password] {\n    width: 100%;\n    padding: 12px 20px;\n    margin: 8px 0;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-sizing: border-box;\n}\n\nbutton {\n    background-color: #4CAF50;\n    color: white;\n    padding: 14px 20px;\n    margin: 8px 0;\n    border: none;\n    cursor: pointer;\n    width: 100%;\n}\n\nbutton:hover {\n    opacity: 0.8;\n}\n\n.cancelbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #f44336;\n}\n\n.aceptbtn {\n    width: auto;\n    padding: 10px 18px;\n    background-color: #3664F4;\n}\n\n.imgcontainer {\n    text-align: center;\n    margin: 24px 0 12px 0;\n}\n\nimg.avatar {\n    width: 40%;\n    border-radius: 50%;\n}\n\n.container {\n    padding: 16px;\n}\n\nspan.psw {\n    float: right;\n    padding-top: 16px;\n}\n\n/* Change styles for span and cancel button on extra small screens */\n\n@media screen and (max-width: 300px) {\n    span.psw {\n       display: block;\n       float: none;\n    }\n    .cancelbtn {\n       width: 100%;\n    }\n}\n\n.fondo{\n\n    background-image: url('slider-bg-2.jpg');\n    margin-top: -60px;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvbG9naW4vbG9naW4uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7O0lBRUksYUFBYTtBQUNqQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7SUFDbEIsYUFBYTtJQUNiLHFCQUFxQjtJQUNyQixzQkFBc0I7SUFDdEIsc0JBQXNCO0FBQzFCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLFlBQVk7SUFDWixrQkFBa0I7SUFDbEIsYUFBYTtJQUNiLFlBQVk7SUFDWixlQUFlO0lBQ2YsV0FBVztBQUNmOztBQUVBO0lBQ0ksWUFBWTtBQUNoQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7SUFDbEIseUJBQXlCO0FBQzdCOztBQUNBO0lBQ0ksV0FBVztJQUNYLGtCQUFrQjtJQUNsQix5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSxrQkFBa0I7SUFDbEIscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksVUFBVTtJQUNWLGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLGFBQWE7QUFDakI7O0FBRUE7SUFDSSxZQUFZO0lBQ1osaUJBQWlCO0FBQ3JCOztBQUVBLG9FQUFvRTs7QUFDcEU7SUFDSTtPQUNHLGNBQWM7T0FDZCxXQUFXO0lBQ2Q7SUFDQTtPQUNHLFdBQVc7SUFDZDtBQUNKOztBQUVBOztJQUVJLHdDQUF1RTtJQUN2RSxpQkFBaUI7RUFDbkIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9sb2dpbi9sb2dpbi5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG5mb3JtIHtcbiAgXG4gICAgcGFkZGluZzogMTBweDtcbn1cblxuaW5wdXRbdHlwZT10ZXh0XSwgaW5wdXRbdHlwZT1wYXNzd29yZF0ge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHBhZGRpbmc6IDEycHggMjBweDtcbiAgICBtYXJnaW46IDhweCAwO1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG59XG5cbmJ1dHRvbiB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRDQUY1MDtcbiAgICBjb2xvcjogd2hpdGU7XG4gICAgcGFkZGluZzogMTRweCAyMHB4O1xuICAgIG1hcmdpbjogOHB4IDA7XG4gICAgYm9yZGVyOiBub25lO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB3aWR0aDogMTAwJTtcbn1cblxuYnV0dG9uOmhvdmVyIHtcbiAgICBvcGFjaXR5OiAwLjg7XG59XG5cbi5jYW5jZWxidG4ge1xuICAgIHdpZHRoOiBhdXRvO1xuICAgIHBhZGRpbmc6IDEwcHggMThweDtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjQ0MzM2O1xufVxuLmFjZXB0YnRuIHtcbiAgICB3aWR0aDogYXV0bztcbiAgICBwYWRkaW5nOiAxMHB4IDE4cHg7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzM2NjRGNDtcbn1cbi5pbWdjb250YWluZXIge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBtYXJnaW46IDI0cHggMCAxMnB4IDA7XG59XG5cbmltZy5hdmF0YXIge1xuICAgIHdpZHRoOiA0MCU7XG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xufVxuXG4uY29udGFpbmVyIHtcbiAgICBwYWRkaW5nOiAxNnB4O1xufVxuXG5zcGFuLnBzdyB7XG4gICAgZmxvYXQ6IHJpZ2h0O1xuICAgIHBhZGRpbmctdG9wOiAxNnB4O1xufVxuXG4vKiBDaGFuZ2Ugc3R5bGVzIGZvciBzcGFuIGFuZCBjYW5jZWwgYnV0dG9uIG9uIGV4dHJhIHNtYWxsIHNjcmVlbnMgKi9cbkBtZWRpYSBzY3JlZW4gYW5kIChtYXgtd2lkdGg6IDMwMHB4KSB7XG4gICAgc3Bhbi5wc3cge1xuICAgICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgICAgIGZsb2F0OiBub25lO1xuICAgIH1cbiAgICAuY2FuY2VsYnRuIHtcbiAgICAgICB3aWR0aDogMTAwJTtcbiAgICB9XG59XG5cbi5mb25kb3tcblxuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi4uLi8uLi8uLi9kb2NzL2Fzc2V0cy9pbWFnZW5lcy9zbGlkZXItYmctMi5qcGdcIik7XG4gICAgbWFyZ2luLXRvcDogLTYwcHg7XG4gIH0iXX0= */"
 
 /***/ }),
 
@@ -1710,7 +1889,7 @@ module.exports = "\nform {\n    border: 10px solid #f1f1f1;\n    padding: 10px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--div style=\"margin: 20% auto; width: 30%;\">\n  <div class=\"row\">\n    <div class=\"col-lg-6\">\n      Usuario\n    </div>\n    <div class=\"col-lg-6\">\n      <input type=\"text\"  [(ngModel)]=\"usuario\">\n    </div>\n  </div>\n  <div class=\"row\" style=\"margin-top: 5px\">\n    <div class=\"col-lg-6\">\n      Clave\n    </div>\n    <div class=\"col-lg-6\">\n      <input type=\"password\" [(ngModel)]=\"clave\">\n    </div>\n  </div>\n  <div class=\"row\" style=\"text-align: center; margin-top: 10px\">\n    <div class=\"col-lg-12\">\n      <button (click)=\"Entrar()\" class=\"btn btn-info btn-lg\" >Entrar</button>\n    </div>\n  </div>\n</div-->\n <div class=\"container\" >\n  <div class=\"jumbotron\" style=\"padding:50px;\">\n    <form action=\"return true;\">\n      <div class=\"imgcontainer\">\n        <img src=\"./assets/imagenes/login.png\" alt=\"Avatar\" class=\"avatar\" max-width=\"104\" >\n      </div>\n\n      <div class=\"container\">\n        <label><b>Usuario</b></label>\n        <input type=\"text\" placeholder=\"Usuario\"  [(ngModel)]=\"user.email\"  name=\"uname\" required>\n\n        <label><b>Clave</b></label>\n        <input type=\"password\" placeholder=\"Clave\"  [(ngModel)]=\"user.password\" name=\"psw\" required>\n\n        \n            \n        <button *ngIf=\"logeando\"  (click)=\"MoverBarraDeProgreso()\" >Ingresar</button>\n        <button *ngIf=\"logeando\"  (click)=\"admin()\" >Ingresar como admin</button>\n        <button *ngIf=\"logeando\"  (click)=\"invitado()\" >Ingresar como invitado</button>\n       \n        <div *ngIf=\"!logeando\" class=\"progress\">\n            <div class=\"progress-bar progress-bar-info progress-bar-striped active\" [class]=\"clase\" role=\"progressbar\" aria-valuenow=\"10\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"ProgresoDeAncho\" >\n              {{progresoMensaje}} - {{progreso}}%\n            </div>\n        </div>\n       \n        <input type=\"checkbox\" checked=\"checked\"> Recordar mis datos\n      </div>\n\n      <div class=\"container\" style=\"background-color:#f1f1f1\">\n        <button type=\"button\" class=\"cancelbtn\" (click)=\"borrar()\">Cancelar</button>\n        <button type=\"button\" class=\"aceptbtn\" routerLink=\"/Registro\" >Registrarse</button>\n        <span class=\"psw\">Te olvidaste <a href=\"#\">la clave?</a></span>\n      </div>\n     \n    </form>\n  </div>\n</div>"
+module.exports = "<div class=\"fondo\">\n <div class=\"container\" >\n  <div class=\"jumbotron\" style=\"padding:50px;width: 50%;margin-left: 250px;background: none;margin-bottom: -31px;margin-top: -89px;\">\n    <form action=\"return true;\">\n      <div class=\"imgcontainer\">\n        <img src=\"./assets/imagenes/login.png\" alt=\"Avatar\" class=\"avatar\" max-width=\"104\" >\n      </div>\n\n      <div class=\"container\">\n        <label><b>Usuario</b></label>\n        <input type=\"text\" placeholder=\"Usuario\"  [(ngModel)]=\"user.email\"  name=\"uname\" required>\n\n        <label><b>Clave</b></label>\n        <input type=\"password\" placeholder=\"Clave\"  [(ngModel)]=\"user.password\" name=\"psw\" required>\n\n        \n            \n        <button *ngIf=\"logeando\"  (click)=\"MoverBarraDeProgreso()\" >Ingresar</button>\n        <button *ngIf=\"logeando\"  (click)=\"admin()\" >Ingresar como admin</button>\n        <button *ngIf=\"logeando\"  (click)=\"invitado()\" >Ingresar como invitado</button>\n       \n        <div *ngIf=\"!logeando\" class=\"progress\">\n            <div class=\"progress-bar progress-bar-info progress-bar-striped active\" [class]=\"clase\" role=\"progressbar\" aria-valuenow=\"10\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"ProgresoDeAncho\" >\n              {{progresoMensaje}} - {{progreso}}%\n            </div>\n        </div>\n       \n        <input type=\"checkbox\" checked=\"checked\"> Recordar mis datos\n      </div>\n\n      <div class=\"container\" >\n        <button type=\"button\" class=\"cancelbtn\" (click)=\"borrar()\">Cancelar</button>\n        <button type=\"button\" class=\"aceptbtn\" routerLink=\"/Registro\" >Registrarse</button>\n        <span class=\"psw\">Te olvidaste <a href=\"#\">la clave?</a></span>\n      </div>\n     \n    </form>\n  </div>\n</div>\n</div>"
 
 /***/ }),
 
@@ -1908,7 +2087,7 @@ var MapaDeGoogleComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".card {\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\n    transition: 0.3s;\n    border-radius: 5px; /* 5px rounded corners */\n    max-width: 300px;\n   height: 100%;\n    margin: 10px;\n    padding-bottom: 10px;\n    float: left;\n  background-color: #DEF3A6;\n    text-align: center;\n}\n\n/* Add rounded corners to the top left and the top right corner of the image */\n\nimg {\n    border-radius: 5px 5px 0 0;\n    width: 200px;\n    height: 200px;\n}\n\n/* Add some padding inside the card container */\n\n.container {\n    padding: 2px 16px;\n}\n\n.button{\n    margin-left: 1px;\n    display: inline-block;\n    width: 90%;\n    padding: 5px 15px;\n    font-size: 24px;\n    text-align: center;\n    cursor: pointer;\n    outline: none;\n    color: #fff;\n    background-color: #4CAF50;\n    border: none;\n    border-radius: 15px;\n    box-shadow: 0 9px #999;\n\n    border: none;\n    outline: 0;\n \n    padding: 8px;\n    color: white;\n   /* background-color: #000;*/\n    text-align: center;\n    cursor: pointer;\n    width: 100%;\n  }\n\n.button:hover {background-color: #3e8e41}\n\n.button:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    -webkit-transform: translateY(4px);\n            transform: translateY(4px);\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvbWVudS1jYXJkL21lbnUtY2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksdUNBQXVDO0lBQ3ZDLGdCQUFnQjtJQUNoQixrQkFBa0IsRUFBRSx3QkFBd0I7SUFDNUMsZ0JBQWdCO0dBQ2pCLFlBQVk7SUFDWCxZQUFZO0lBQ1osb0JBQW9CO0lBQ3BCLFdBQVc7RUFDYix5QkFBeUI7SUFDdkIsa0JBQWtCO0FBQ3RCOztBQUVBLDhFQUE4RTs7QUFDOUU7SUFDSSwwQkFBMEI7SUFDMUIsWUFBWTtJQUNaLGFBQWE7QUFDakI7O0FBQUMsK0NBQStDOztBQUNoRDtJQUNJLGlCQUFpQjtBQUNyQjs7QUFHQTtJQUNJLGdCQUFnQjtJQUNoQixxQkFBcUI7SUFDckIsVUFBVTtJQUNWLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2Ysa0JBQWtCO0lBQ2xCLGVBQWU7SUFDZixhQUFhO0lBQ2IsV0FBVztJQUNYLHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLHNCQUFzQjs7SUFFdEIsWUFBWTtJQUNaLFVBQVU7O0lBRVYsWUFBWTtJQUNaLFlBQVk7R0FDYiwyQkFBMkI7SUFDMUIsa0JBQWtCO0lBQ2xCLGVBQWU7SUFDZixXQUFXO0VBQ2I7O0FBRUEsZUFBZSx5QkFBeUI7O0FBRXhDO0lBQ0UseUJBQXlCO0lBQ3pCLHNCQUFzQjtJQUN0QixrQ0FBMEI7WUFBMUIsMEJBQTBCO0VBQzVCIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50ZXMvbWVudS1jYXJkL21lbnUtY2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNhcmQge1xuICAgIGJveC1zaGFkb3c6IDAgNHB4IDhweCAwIHJnYmEoMCwwLDAsMC4yKTtcbiAgICB0cmFuc2l0aW9uOiAwLjNzO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDsgLyogNXB4IHJvdW5kZWQgY29ybmVycyAqL1xuICAgIG1heC13aWR0aDogMzAwcHg7XG4gICBoZWlnaHQ6IDEwMCU7XG4gICAgbWFyZ2luOiAxMHB4O1xuICAgIHBhZGRpbmctYm90dG9tOiAxMHB4O1xuICAgIGZsb2F0OiBsZWZ0O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjREVGM0E2O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLyogQWRkIHJvdW5kZWQgY29ybmVycyB0byB0aGUgdG9wIGxlZnQgYW5kIHRoZSB0b3AgcmlnaHQgY29ybmVyIG9mIHRoZSBpbWFnZSAqL1xuaW1nIHtcbiAgICBib3JkZXItcmFkaXVzOiA1cHggNXB4IDAgMDtcbiAgICB3aWR0aDogMjAwcHg7XG4gICAgaGVpZ2h0OiAyMDBweDtcbn0vKiBBZGQgc29tZSBwYWRkaW5nIGluc2lkZSB0aGUgY2FyZCBjb250YWluZXIgKi9cbi5jb250YWluZXIge1xuICAgIHBhZGRpbmc6IDJweCAxNnB4O1xufVxuXG5cbi5idXR0b257XG4gICAgbWFyZ2luLWxlZnQ6IDFweDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDkwJTtcbiAgICBwYWRkaW5nOiA1cHggMTVweDtcbiAgICBmb250LXNpemU6IDI0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBvdXRsaW5lOiBub25lO1xuICAgIGNvbG9yOiAjZmZmO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM0Q0FGNTA7XG4gICAgYm9yZGVyOiBub25lO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XG4gICAgYm94LXNoYWRvdzogMCA5cHggIzk5OTtcblxuICAgIGJvcmRlcjogbm9uZTtcbiAgICBvdXRsaW5lOiAwO1xuIFxuICAgIHBhZGRpbmc6IDhweDtcbiAgICBjb2xvcjogd2hpdGU7XG4gICAvKiBiYWNrZ3JvdW5kLWNvbG9yOiAjMDAwOyovXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB3aWR0aDogMTAwJTtcbiAgfVxuICBcbiAgLmJ1dHRvbjpob3ZlciB7YmFja2dyb3VuZC1jb2xvcjogIzNlOGU0MX1cbiAgXG4gIC5idXR0b246YWN0aXZlIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjM2U4ZTQxO1xuICAgIGJveC1zaGFkb3c6IDAgNXB4ICM2NjY7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDRweCk7XG4gIH0iXX0= */"
+module.exports = ".card {\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\n    transition: 0.3s;\n    border-radius: 5px; /* 5px rounded corners */\n    max-width: 300px;\n   height: 100%;\n    margin: 10px;\n    padding-bottom: 10px;\n    float: left;\n  background-color: #DEF3A6;\n    text-align: center;\n}\n\n/* Add rounded corners to the top left and the top right corner of the image */\n\nimg {\n    border-radius: 5px 5px 0 0;\n    width: 200px;\n    height: 200px;\n}\n\n/* Add some padding inside the card container */\n\n.container {\n    padding: 2px 16px;\n    display: -webkit-box;\n}\n\n.button{\n    margin-left: 1px;\n    display: inline-block;\n    width: 90%;\n    padding: 5px 15px;\n    font-size: 24px;\n    text-align: center;\n    cursor: pointer;\n    outline: none;\n    color: #fff;\n    background-color: #4CAF50;\n    border: none;\n    border-radius: 15px;\n    box-shadow: 0 9px #999;\n\n    border: none;\n    outline: 0;\n \n    padding: 8px;\n    color: white;\n   /* background-color: #000;*/\n    text-align: center;\n    cursor: pointer;\n    width: 100%;\n  }\n\n.button:hover {background-color: #3e8e41}\n\n.button:active {\n    background-color: #3e8e41;\n    box-shadow: 0 5px #666;\n    -webkit-transform: translateY(4px);\n            transform: translateY(4px);\n  }\n\n.fondo{\n\n    background-image: url('slider-bg-2.jpg');\n    margin-top: -60px;\n  }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvbWVudS1jYXJkL21lbnUtY2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksdUNBQXVDO0lBQ3ZDLGdCQUFnQjtJQUNoQixrQkFBa0IsRUFBRSx3QkFBd0I7SUFDNUMsZ0JBQWdCO0dBQ2pCLFlBQVk7SUFDWCxZQUFZO0lBQ1osb0JBQW9CO0lBQ3BCLFdBQVc7RUFDYix5QkFBeUI7SUFDdkIsa0JBQWtCO0FBQ3RCOztBQUVBLDhFQUE4RTs7QUFDOUU7SUFDSSwwQkFBMEI7SUFDMUIsWUFBWTtJQUNaLGFBQWE7QUFDakI7O0FBQUMsK0NBQStDOztBQUNoRDtJQUNJLGlCQUFpQjtJQUNqQixvQkFBb0I7QUFDeEI7O0FBR0E7SUFDSSxnQkFBZ0I7SUFDaEIscUJBQXFCO0lBQ3JCLFVBQVU7SUFDVixpQkFBaUI7SUFDakIsZUFBZTtJQUNmLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsYUFBYTtJQUNiLFdBQVc7SUFDWCx5QkFBeUI7SUFDekIsWUFBWTtJQUNaLG1CQUFtQjtJQUNuQixzQkFBc0I7O0lBRXRCLFlBQVk7SUFDWixVQUFVOztJQUVWLFlBQVk7SUFDWixZQUFZO0dBQ2IsMkJBQTJCO0lBQzFCLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsV0FBVztFQUNiOztBQUVBLGVBQWUseUJBQXlCOztBQUV4QztJQUNFLHlCQUF5QjtJQUN6QixzQkFBc0I7SUFDdEIsa0NBQTBCO1lBQTFCLDBCQUEwQjtFQUM1Qjs7QUFFQTs7SUFFRSx3Q0FBdUU7SUFDdkUsaUJBQWlCO0VBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50ZXMvbWVudS1jYXJkL21lbnUtY2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNhcmQge1xuICAgIGJveC1zaGFkb3c6IDAgNHB4IDhweCAwIHJnYmEoMCwwLDAsMC4yKTtcbiAgICB0cmFuc2l0aW9uOiAwLjNzO1xuICAgIGJvcmRlci1yYWRpdXM6IDVweDsgLyogNXB4IHJvdW5kZWQgY29ybmVycyAqL1xuICAgIG1heC13aWR0aDogMzAwcHg7XG4gICBoZWlnaHQ6IDEwMCU7XG4gICAgbWFyZ2luOiAxMHB4O1xuICAgIHBhZGRpbmctYm90dG9tOiAxMHB4O1xuICAgIGZsb2F0OiBsZWZ0O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjREVGM0E2O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLyogQWRkIHJvdW5kZWQgY29ybmVycyB0byB0aGUgdG9wIGxlZnQgYW5kIHRoZSB0b3AgcmlnaHQgY29ybmVyIG9mIHRoZSBpbWFnZSAqL1xuaW1nIHtcbiAgICBib3JkZXItcmFkaXVzOiA1cHggNXB4IDAgMDtcbiAgICB3aWR0aDogMjAwcHg7XG4gICAgaGVpZ2h0OiAyMDBweDtcbn0vKiBBZGQgc29tZSBwYWRkaW5nIGluc2lkZSB0aGUgY2FyZCBjb250YWluZXIgKi9cbi5jb250YWluZXIge1xuICAgIHBhZGRpbmc6IDJweCAxNnB4O1xuICAgIGRpc3BsYXk6IC13ZWJraXQtYm94O1xufVxuXG5cbi5idXR0b257XG4gICAgbWFyZ2luLWxlZnQ6IDFweDtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDkwJTtcbiAgICBwYWRkaW5nOiA1cHggMTVweDtcbiAgICBmb250LXNpemU6IDI0cHg7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBvdXRsaW5lOiBub25lO1xuICAgIGNvbG9yOiAjZmZmO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM0Q0FGNTA7XG4gICAgYm9yZGVyOiBub25lO1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XG4gICAgYm94LXNoYWRvdzogMCA5cHggIzk5OTtcblxuICAgIGJvcmRlcjogbm9uZTtcbiAgICBvdXRsaW5lOiAwO1xuIFxuICAgIHBhZGRpbmc6IDhweDtcbiAgICBjb2xvcjogd2hpdGU7XG4gICAvKiBiYWNrZ3JvdW5kLWNvbG9yOiAjMDAwOyovXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB3aWR0aDogMTAwJTtcbiAgfVxuICBcbiAgLmJ1dHRvbjpob3ZlciB7YmFja2dyb3VuZC1jb2xvcjogIzNlOGU0MX1cbiAgXG4gIC5idXR0b246YWN0aXZlIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjM2U4ZTQxO1xuICAgIGJveC1zaGFkb3c6IDAgNXB4ICM2NjY7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDRweCk7XG4gIH1cblxuICAuZm9uZG97XG5cbiAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCIuLi4vLi4vLi4vZG9jcy9hc3NldHMvaW1hZ2VuZXMvc2xpZGVyLWJnLTIuanBnXCIpO1xuICAgIG1hcmdpbi10b3A6IC02MHB4O1xuICB9Il19 */"
 
 /***/ }),
 
@@ -1919,7 +2098,7 @@ module.exports = ".card {\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\n    tra
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" >\n    <div class=\"card\">\n      <img class=\"img-thumbnail\"   src=\"./assets/imagenes/cerebro.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Velocidad y agilidad aritmética </h1>\n      <p class=\"title\">Juego de agilidad mental</p>\n      <p>UTN FRA </p>\n  \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Agilidad')\">Jugar</button></p>\n    \n    </div>\n  \n    <div class=\"card\">\n      <img class=\"img-thumbnail\" src=\"./assets/imagenes/ppt.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Piedra Papel o Tijera</h1>\n      <p class=\"title\">Juega contra la máquina</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('PPT')\">Jugar</button></p>\n    </div>\n    <div class=\"card\">\n      <img  class=\"img-thumbnail\"  src=\"./assets/imagenes/adivina.png\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Adivina el número secreto</h1>\n      <p class=\"title\">Juega de estrategia</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Adivina')\">Jugar</button></p>\n      <div class=\"card\">\n        <img  class=\"img-thumbnail\"  src=\"./assets/imagenes/adivina.png\" alt=\"Avatar\" style=\"width:100%\">\n        <h1>Adivina la Provincia</h1>\n        <p class=\"title\">Juega de Conocimiento</p>\n        <p>UTN FRA </p>\n        \n        <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n        <p>           <button class=\"button\"  (click)=\"Juego('AdivinaProvincia')\">Jugar</button></p>\n    </div>\n  </div>"
+module.exports = "<div class=\"fondo\">\n<div class=\"container\" style=\"\nwidth: 89%;\nheight: 50%;\nmargin-left: 22px;\">\n    <div class=\"card\">\n      <img class=\"img-thumbnail\"   src=\"./assets/imagenes/cerebro.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Agilidad aritmética </h1>\n      <p class=\"title\">Juego de agilidad mental</p>\n      <p>UTN FRA </p>\n  \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Agilidad')\">Jugar</button></p>\n    \n    </div>\n  \n    <div class=\"card\">\n      <img class=\"img-thumbnail\" src=\"./assets/imagenes/ppt.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Piedra Papel o Tijera</h1>\n      <p class=\"title\">Juega contra la máquina</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('PPT')\">Jugar</button></p>\n    </div>\n    <div class=\"card\">\n      <img  class=\"img-thumbnail\"  src=\"./assets/imagenes/adivina.png\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Adivina el número secreto</h1>\n      <p class=\"title\">Juega de estrategia</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Adivina')\">Jugar</button></p>\n    </div>\n      <div class=\"card\">\n        <img  class=\"img-thumbnail\"  src=\"./assets/imagenes/adivina.png\" alt=\"Avatar\" style=\"width:100%\">\n        <h1>Adivina la Provincia</h1>\n        <p class=\"title\">Juega de Conocimiento</p>\n        <p>UTN FRA </p>\n        \n        <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n        <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n        <p>           <button class=\"button\"  (click)=\"Juego('AdivinaProvincia')\">Jugar</button></p>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1962,6 +2141,9 @@ var MenuCardComponent = /** @class */ (function () {
                 break;
             case 'AdivinaProvincia':
                 this.router.navigate(['/Juegos/AdivinaProvincia']);
+                break;
+            case 'PPT':
+                this.router.navigate(['/Juegos/PiedraPapelTijera']);
                 break;
         }
     };
@@ -2114,6 +2296,103 @@ var MenuComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.css":
+/*!***********************************************************************************!*\
+  !*** ./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.css ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "body {\r\n    background: #000;\r\n    font-family: \"Lucida Grande\", \"Lucida Sans\", Arial, Sans-serif;\r\n}\r\n\r\n#juego {\r\n    background: url('img.jpg') 0 0 no-repeat;\r\n    padding: 0;\r\n    width: 800px;\r\n    margin: 1em auto;\r\n    height: 360px;\r\n}\r\n\r\nh1{\r\n    text-align: center;\r\n    margin: 1em;\r\n    color:white;\r\n}\r\n\r\n#piedra,\r\n#papel,\r\n#tijera{\r\n    width: 130px;\r\n    height: 130px;\r\n    border-radius:50%;\r\n    margin: 0;\r\n    border: 1px solid rgba(0,0,0,0);\r\n    padding: 0;\r\n    display:inline-block;\r\n    position:relative;\r\n    overflow: hidden;\r\n    cursor: pointer;\r\n}\r\n\r\n#piedra:hover,\r\n#papel:hover,\r\n#tijera:hover{\r\n    background: rgba(0,0,0,0.2);\r\n    \r\n}\r\n\r\n#piedra {\r\n    margin: 8em 0 0 8em;\r\n}\r\n\r\n#papel {\r\n    margin: 8em 0 0 5em;\r\n}\r\n\r\n#tijera {\r\n    margin: 8em 0 0 5em;\r\n}\r\n\r\n#informacion {\r\n    background: #000;\r\n    margin-left: 30em;\r\n    padding: 0 1em;\r\n    width: 800px;\r\n}\r\n\r\n#informacion p{\r\n    float: left;\r\n}\r\n\r\n#efecto {\r\n    position: absolute;\r\n    background: rgba(0,0,0,0.9);\r\n    height: 100%;\r\n    width: 100%;\r\n    top: 0;\r\n    left: 0;\r\n    z-index: 4;\r\n    transition: all 0.1s;\r\n}\r\n\r\n#efecto h1 {\r\n    text-align: center;\r\n    font-size: 5em;\r\n    color: #fff;\r\n    margin: 2em 0 0;\r\n    padding: 0;\r\n    line-height: 1em;\r\n}\r\n\r\n#efecto h3 {\r\n    text-align: center;\r\n    font-size: 3em;\r\n    line-height: 1em;\r\n    margin: 0;\r\n    padding: 0;\r\n    color: #ddd;\r\n}\r\n\r\n#snackbar {\r\n    visibility: hidden;\r\n    min-width: 250px;\r\n    margin-left: -125px;\r\n   \r\n    color: #fff;\r\n    text-align: center;\r\n    border-radius: 2px;\r\n    padding: 16px;\r\n    position: fixed;\r\n    z-index: 1;\r\n    left: 50%;\r\n    bottom: 30px;\r\n    font-size: 17px;\r\n}\r\n\r\n#snackbar.Ganador {\r\n    background-color: #059F2F;\r\n}\r\n\r\n#snackbar.Perdedor {\r\n    background-color: #FF0000;\r\n}\r\n\r\n#snackbar.show {\r\n    visibility: visible;\r\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n}\r\n\r\n@-webkit-keyframes fadein {\r\n    from {bottom: 0; opacity: 0;} \r\n    to {bottom: 30px; opacity: 1;}\r\n}\r\n\r\n@keyframes fadein {\r\n    from {bottom: 0; opacity: 0;}\r\n    to {bottom: 30px; opacity: 1;}\r\n}\r\n\r\n@-webkit-keyframes fadeout {\r\n    from {bottom: 30px; opacity: 1;} \r\n    to {bottom: 0; opacity: 0;}\r\n}\r\n\r\n@keyframes fadeout {\r\n    from {bottom: 30px; opacity: 1;}\r\n    to {bottom: 0; opacity: 0;}\r\n}\r\n\r\n.fondo{\r\n\r\n    background-image: url('slider-bg-2.jpg');\r\n    margin-top: -100px\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvcGllZHJhLXBhcGVsLXRpamVyYS9waWVkcmEtcGFwZWwtdGlqZXJhLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7SUFDaEIsOERBQThEO0FBQ2xFOztBQUVBO0lBQ0ksd0NBQStEO0lBQy9ELFVBQVU7SUFDVixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLGFBQWE7QUFDakI7O0FBRUM7SUFDRyxrQkFBa0I7SUFDbEIsV0FBVztJQUNYLFdBQVc7QUFDZjs7QUFHQTs7O0lBR0ksWUFBWTtJQUNaLGFBQWE7SUFDYixpQkFBaUI7SUFDakIsU0FBUztJQUNULCtCQUErQjtJQUMvQixVQUFVO0lBQ1Ysb0JBQW9CO0lBQ3BCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsZUFBZTtBQUNuQjs7QUFDQTs7O0lBR0ksMkJBQTJCOztBQUUvQjs7QUFDQTtJQUNJLG1CQUFtQjtBQUN2Qjs7QUFFQTtJQUNJLG1CQUFtQjtBQUN2Qjs7QUFDQTtJQUNJLG1CQUFtQjtBQUN2Qjs7QUFFQTtJQUNJLGdCQUFnQjtJQUNoQixpQkFBaUI7SUFDakIsY0FBYztJQUNkLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxrQkFBa0I7SUFDbEIsMkJBQTJCO0lBQzNCLFlBQVk7SUFDWixXQUFXO0lBQ1gsTUFBTTtJQUNOLE9BQU87SUFDUCxVQUFVO0lBQ1Ysb0JBQW9CO0FBQ3hCOztBQUVBO0lBQ0ksa0JBQWtCO0lBQ2xCLGNBQWM7SUFDZCxXQUFXO0lBQ1gsZUFBZTtJQUNmLFVBQVU7SUFDVixnQkFBZ0I7QUFDcEI7O0FBQ0E7SUFDSSxrQkFBa0I7SUFDbEIsY0FBYztJQUNkLGdCQUFnQjtJQUNoQixTQUFTO0lBQ1QsVUFBVTtJQUNWLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsbUJBQW1COztJQUVuQixXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsZUFBZTtJQUNmLFVBQVU7SUFDVixTQUFTO0lBQ1QsWUFBWTtJQUNaLGVBQWU7QUFDbkI7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSx5QkFBeUI7QUFDN0I7O0FBQ0E7SUFDSSxtQkFBbUI7SUFDbkIsaURBQWlEO0lBQ2pELHlDQUF5QztBQUM3Qzs7QUFFQTtJQUNJLE1BQU0sU0FBUyxFQUFFLFVBQVUsQ0FBQztJQUM1QixJQUFJLFlBQVksRUFBRSxVQUFVLENBQUM7QUFDakM7O0FBRUE7SUFDSSxNQUFNLFNBQVMsRUFBRSxVQUFVLENBQUM7SUFDNUIsSUFBSSxZQUFZLEVBQUUsVUFBVSxDQUFDO0FBQ2pDOztBQUVBO0lBQ0ksTUFBTSxZQUFZLEVBQUUsVUFBVSxDQUFDO0lBQy9CLElBQUksU0FBUyxFQUFFLFVBQVUsQ0FBQztBQUM5Qjs7QUFFQTtJQUNJLE1BQU0sWUFBWSxFQUFFLFVBQVUsQ0FBQztJQUMvQixJQUFJLFNBQVMsRUFBRSxVQUFVLENBQUM7QUFDOUI7O0FBR0E7O0lBRUksd0NBQXVFO0lBQ3ZFO0VBQ0YiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9waWVkcmEtcGFwZWwtdGlqZXJhL3BpZWRyYS1wYXBlbC10aWplcmEuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImJvZHkge1xyXG4gICAgYmFja2dyb3VuZDogIzAwMDtcclxuICAgIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgXCJMdWNpZGEgU2Fuc1wiLCBBcmlhbCwgU2Fucy1zZXJpZjtcclxufVxyXG5cclxuI2p1ZWdvIHtcclxuICAgIGJhY2tncm91bmQ6IHVybCguLi8uLi8uLi9hc3NldHMvaW1hZ2VuZXMvaW1nLmpwZykgMCAwIG5vLXJlcGVhdDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICB3aWR0aDogODAwcHg7XHJcbiAgICBtYXJnaW46IDFlbSBhdXRvO1xyXG4gICAgaGVpZ2h0OiAzNjBweDtcclxufVxyXG5cclxuIGgxe1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgbWFyZ2luOiAxZW07XHJcbiAgICBjb2xvcjp3aGl0ZTtcclxufVxyXG5cclxuXHJcbiNwaWVkcmEsXHJcbiNwYXBlbCxcclxuI3RpamVyYXtcclxuICAgIHdpZHRoOiAxMzBweDtcclxuICAgIGhlaWdodDogMTMwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOjUwJTtcclxuICAgIG1hcmdpbjogMDtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMCwwLDAsMCk7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgZGlzcGxheTppbmxpbmUtYmxvY2s7XHJcbiAgICBwb3NpdGlvbjpyZWxhdGl2ZTtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuI3BpZWRyYTpob3ZlcixcclxuI3BhcGVsOmhvdmVyLFxyXG4jdGlqZXJhOmhvdmVye1xyXG4gICAgYmFja2dyb3VuZDogcmdiYSgwLDAsMCwwLjIpO1xyXG4gICAgXHJcbn1cclxuI3BpZWRyYSB7XHJcbiAgICBtYXJnaW46IDhlbSAwIDAgOGVtO1xyXG59XHJcblxyXG4jcGFwZWwge1xyXG4gICAgbWFyZ2luOiA4ZW0gMCAwIDVlbTtcclxufVxyXG4jdGlqZXJhIHtcclxuICAgIG1hcmdpbjogOGVtIDAgMCA1ZW07XHJcbn1cclxuXHJcbiNpbmZvcm1hY2lvbiB7XHJcbiAgICBiYWNrZ3JvdW5kOiAjMDAwO1xyXG4gICAgbWFyZ2luLWxlZnQ6IDMwZW07XHJcbiAgICBwYWRkaW5nOiAwIDFlbTtcclxuICAgIHdpZHRoOiA4MDBweDtcclxufVxyXG5cclxuI2luZm9ybWFjaW9uIHB7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuI2VmZWN0byB7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsMCwwLDAuOSk7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIHRvcDogMDtcclxuICAgIGxlZnQ6IDA7XHJcbiAgICB6LWluZGV4OiA0O1xyXG4gICAgdHJhbnNpdGlvbjogYWxsIDAuMXM7XHJcbn1cclxuXHJcbiNlZmVjdG8gaDEge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgZm9udC1zaXplOiA1ZW07XHJcbiAgICBjb2xvcjogI2ZmZjtcclxuICAgIG1hcmdpbjogMmVtIDAgMDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBsaW5lLWhlaWdodDogMWVtO1xyXG59XHJcbiNlZmVjdG8gaDMge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgZm9udC1zaXplOiAzZW07XHJcbiAgICBsaW5lLWhlaWdodDogMWVtO1xyXG4gICAgbWFyZ2luOiAwO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIGNvbG9yOiAjZGRkO1xyXG59XHJcblxyXG4jc25hY2tiYXIge1xyXG4gICAgdmlzaWJpbGl0eTogaGlkZGVuO1xyXG4gICAgbWluLXdpZHRoOiAyNTBweDtcclxuICAgIG1hcmdpbi1sZWZ0OiAtMTI1cHg7XHJcbiAgIFxyXG4gICAgY29sb3I6ICNmZmY7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBib3JkZXItcmFkaXVzOiAycHg7XHJcbiAgICBwYWRkaW5nOiAxNnB4O1xyXG4gICAgcG9zaXRpb246IGZpeGVkO1xyXG4gICAgei1pbmRleDogMTtcclxuICAgIGxlZnQ6IDUwJTtcclxuICAgIGJvdHRvbTogMzBweDtcclxuICAgIGZvbnQtc2l6ZTogMTdweDtcclxufVxyXG4jc25hY2tiYXIuR2FuYWRvciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDU5RjJGO1xyXG59XHJcbiNzbmFja2Jhci5QZXJkZWRvciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjRkYwMDAwO1xyXG59XHJcbiNzbmFja2Jhci5zaG93IHtcclxuICAgIHZpc2liaWxpdHk6IHZpc2libGU7XHJcbiAgICAtd2Via2l0LWFuaW1hdGlvbjogZmFkZWluIDAuNXMsIGZhZGVvdXQgMC41cyAyLjVzO1xyXG4gICAgYW5pbWF0aW9uOiBmYWRlaW4gMC41cywgZmFkZW91dCAwLjVzIDIuNXM7XHJcbn1cclxuXHJcbkAtd2Via2l0LWtleWZyYW1lcyBmYWRlaW4ge1xyXG4gICAgZnJvbSB7Ym90dG9tOiAwOyBvcGFjaXR5OiAwO30gXHJcbiAgICB0byB7Ym90dG9tOiAzMHB4OyBvcGFjaXR5OiAxO31cclxufVxyXG5cclxuQGtleWZyYW1lcyBmYWRlaW4ge1xyXG4gICAgZnJvbSB7Ym90dG9tOiAwOyBvcGFjaXR5OiAwO31cclxuICAgIHRvIHtib3R0b206IDMwcHg7IG9wYWNpdHk6IDE7fVxyXG59XHJcblxyXG5ALXdlYmtpdC1rZXlmcmFtZXMgZmFkZW91dCB7XHJcbiAgICBmcm9tIHtib3R0b206IDMwcHg7IG9wYWNpdHk6IDE7fSBcclxuICAgIHRvIHtib3R0b206IDA7IG9wYWNpdHk6IDA7fVxyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIGZhZGVvdXQge1xyXG4gICAgZnJvbSB7Ym90dG9tOiAzMHB4OyBvcGFjaXR5OiAxO31cclxuICAgIHRvIHtib3R0b206IDA7IG9wYWNpdHk6IDA7fVxyXG59XHJcblxyXG5cclxuLmZvbmRve1xyXG5cclxuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi4uLi8uLi8uLi9kb2NzL2Fzc2V0cy9pbWFnZW5lcy9zbGlkZXItYmctMi5qcGdcIik7XHJcbiAgICBtYXJnaW4tdG9wOiAtMTAwcHhcclxuICB9Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.html":
+/*!************************************************************************************!*\
+  !*** ./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.html ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"fondo\">\n\n  <h1>Juega Contra la Maquina</h1>\n  <div id=\"juego\" >\n  <div  (click)=\"generar('Piedra')\" id=\"piedra\"></div>\n      <div  (click)=\"generar('Papel')\" id=\"papel\"></div>\n      <div  (click)=\"generar('Tijera')\" id=\"tijera\"></div>\n</div>\n\n<div id=\"snackbar\">{{Mensajes}}</div>\n<br>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts":
+/*!**********************************************************************************!*\
+  !*** ./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts ***!
+  \**********************************************************************************/
+/*! exports provided: PiedraPapelTijeraComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PiedraPapelTijeraComponent", function() { return PiedraPapelTijeraComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _clases_juego_piedra_papel_tijera__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../clases/juego-piedra-papel-tijera */ "./src/app/clases/juego-piedra-papel-tijera.ts");
+
+
+
+var PiedraPapelTijeraComponent = /** @class */ (function () {
+    function PiedraPapelTijeraComponent() {
+        this.jugador = JSON.parse(localStorage.getItem("Id"));
+        this.nuevoJuego = new _clases_juego_piedra_papel_tijera__WEBPACK_IMPORTED_MODULE_2__["JuegoPiedraPapelTijera"]("Piedra, Papel o Tijera", false, this.jugador, 0, "0");
+        this.ocultarVerificar = true;
+        this.arrayResultados = JSON.parse(this.jugador);
+        this.intentos = 0;
+        this.nuevoJuego.resultado = null;
+        console.info(this.arrayResultados);
+    }
+    PiedraPapelTijeraComponent.prototype.generar = function (eleccion) {
+        this.ocultarVerificar = false;
+        this.nuevoJuego.resultado = this.nuevoJuego.Jugar(eleccion);
+        this.MostarMensaje(this.nuevoJuego.resultado, this.nuevoJuego.gana);
+        console.log(this.nuevoJuego.gana);
+        this.nuevoJuego.jugador = sessionStorage.getItem('user');
+        this.nuevoJuego.intentos = this.intentos + 1;
+        this.intentos = 0;
+        this.nuevoJuego.intentos = this.intentos;
+        console.log("maquina " + this.nuevoJuego.compu);
+        console.log("usuario " + eleccion);
+        console.log(this.nuevoJuego.resultado);
+        this.nuevoJuego.guardarLocal();
+        //Despues de verificar si gane o no, reinicio el juego!!
+    };
+    PiedraPapelTijeraComponent.prototype.MostarMensaje = function (mensaje, ganador) {
+        if (mensaje === void 0) { mensaje = "este es el mensaje"; }
+        this.Mensajes = mensaje;
+        var x = document.getElementById("snackbar");
+        if (ganador) {
+            x.className = "show Ganador";
+        }
+        else {
+            x.className = "show Perdedor";
+        }
+        var modelo = this;
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+            modelo.ocultarVerificar = false;
+        }, 3000);
+        console.info("objeto", x);
+    };
+    PiedraPapelTijeraComponent.prototype.ngOnInit = function () {
+    };
+    PiedraPapelTijeraComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-piedra-papel-tijera',
+            template: __webpack_require__(/*! ./piedra-papel-tijera.component.html */ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.html"),
+            styles: [__webpack_require__(/*! ./piedra-papel-tijera.component.css */ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], PiedraPapelTijeraComponent);
+    return PiedraPapelTijeraComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/componentes/principal/principal.component.css":
 /*!***************************************************************!*\
   !*** ./src/app/componentes/principal/principal.component.css ***!
@@ -2121,7 +2400,7 @@ var MenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".imagenDeMenu{\nwidth: 80px;\nheight: 70px;\n}\n\n.hero-text {\n    text-align: center;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    color: #100000;\n    }\n\n.fondo{\n    background-image: url('/TP-Sala-de-Juegos-ANGULAR-/assets/imagenes/color_principal.jpg');\n    \n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvcHJpbmNpcGFsL3ByaW5jaXBhbC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0EsV0FBVztBQUNYLFlBQVk7QUFDWjs7QUFFQTtJQUNJLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsUUFBUTtJQUNSLFNBQVM7SUFDVCx3Q0FBZ0M7WUFBaEMsZ0NBQWdDO0lBQ2hDLGNBQWM7SUFDZDs7QUFFSjtJQUNJLHdGQUE2RDs7QUFFakUiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9wcmluY2lwYWwvcHJpbmNpcGFsLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaW1hZ2VuRGVNZW51e1xud2lkdGg6IDgwcHg7XG5oZWlnaHQ6IDcwcHg7XG59XG5cbi5oZXJvLXRleHQge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGNvbG9yOiAjMTAwMDAwO1xuICAgIH1cblxuLmZvbmRve1xuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi9hc3NldHMvaW1hZ2VuZXMvY29sb3JfcHJpbmNpcGFsLmpwZ1wiKTtcbiAgICBcbn0iXX0= */"
+module.exports = ".imagenDeMenu{\nwidth: 80px;\nheight: 70px;\n}\n\n.hero-text {\n    text-align: center;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    color: #100000;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50ZXMvcHJpbmNpcGFsL3ByaW5jaXBhbC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0EsV0FBVztBQUNYLFlBQVk7QUFDWjs7QUFFQTtJQUNJLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsUUFBUTtJQUNSLFNBQVM7SUFDVCx3Q0FBZ0M7WUFBaEMsZ0NBQWdDO0lBQ2hDLGNBQWM7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRlcy9wcmluY2lwYWwvcHJpbmNpcGFsLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaW1hZ2VuRGVNZW51e1xud2lkdGg6IDgwcHg7XG5oZWlnaHQ6IDcwcHg7XG59XG5cbi5oZXJvLXRleHQge1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiA1MCU7XG4gICAgbGVmdDogNTAlO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpO1xuICAgIGNvbG9yOiAjMTAwMDAwO1xufSJdfQ== */"
 
 /***/ }),
 
@@ -2132,7 +2411,7 @@ module.exports = ".imagenDeMenu{\nwidth: 80px;\nheight: 70px;\n}\n\n.hero-text {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-cabecera>  </app-cabecera>\n\n<app-menu-principal></app-menu-principal>\n\n<app-footer></app-footer>\n"
+module.exports = "<app-menu-principal></app-menu-principal>\n\n"
 
 /***/ }),
 
@@ -2192,7 +2471,7 @@ module.exports = ".imagenDeQuienSoy{\n    width: 100%;\n   \n    }\nbody {\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-cabecera>  </app-cabecera>\n  \n  <!-- First Container -->\n  <div id =\"quiwn\"class=\"container-fluid bg-1 text-center\">\n    <h3 class=\"margin\">Quién Soy?</h3>\n    <img src=\"./assets/imagenes/quiensoy.jpg\" class=\"img-responsive img-circle margin\" style=\"display:inline\" alt=\"Bird\" width=\"350\" height=\"350\">\n    <h3>Soy Un alumno de la UTN FRA</h3>\n  </div>\n  \n  <!-- Second Container -->\n  <div id =\"que\" class=\"container-fluid bg-2 text-center\">\n    <h3 class=\"margin\">Esto es un trabajo práctico</h3>\n    <p>Cada universidad, cada facultad, cada carrera y obviamente cada materia en particular tiene estrategias didácticas y formas de evaluación diferentes. A pesar de que en muchos casos las universidades intentan estandarizar la forma de dictar clase para generar un orden en las planificaciones cuatrimestre a cuatrimestre, las formas de evaluación son elementales tanto para las instituciones y profesores como para los alumnos. A través de la evaluación formativa el educador busca información en el alumno para lograr comprender cómo se está\n      produciendo el proceso de aprendizaje y poder reajustar los objetivos pedagógicos. Y para el alumno es una muestra del progreso que está logrando y si puede aplicar, materializar y darle visibilidad a la comprensión del tema. Según Black y William (1998), la evaluación formativa, ayuda a que los estudiantes sean independientes a la hora del aprendizaje, es decir, se presenta como receptor, autorregulador y centro de esa misma evaluación. </p>\n    <a href=\"#\" class=\"btn btn-default btn-lg\">\n      <span class=\"glyphicon glyphicon-file\"></span> Descargar PDF\n    </a>\n  </div>\n  \n  <!-- Third Container (Grid) -->\n  <div id =\"donde\" class=\"container-fluid bg-3 text-center\">    \n    <h3 class=\"margin\">Dónde Funciona?</h3><br>\n    <div class=\"row\">\n      <div class=\"col-sm-4\">\n        <p>Con las tecnologias WEB que permiten desarrollar aplicaciones multiplataforma</p>\n        <img src=\"./assets/imagenes/quiensoy1.png\" class=\"img-responsive margin imagenDeQuienSoy\"  alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Principalmente orientada a la experiencia del usuario, garantizando que su funcionamieto sea fluido y pensado en el comportamiento del usuario y en la funcionalidad.</p>\n        <img src=\"./assets/imagenes/quiensoy2.jpg\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Para los sistemas operativos lideres en el mercado del consumo masivo</p>\n        <img src=\"./assets/imagenes/quiensoy3.png\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n    </div>\n  </div>\n  \n  <app-footer></app-footer>"
+module.exports = " \n  <!-- First Container -->\n  <div id =\"quiwn\"class=\"container-fluid bg-1 text-center\">\n    <h3 class=\"margin\">Quién Soy?</h3>\n    <img src=\"./assets/imagenes/quiensoy.jpg\" class=\"img-responsive img-circle margin\" style=\"display:inline\" alt=\"Bird\" width=\"350\" height=\"350\">\n    <h3>Soy Un alumno de la UTN FRA</h3>\n  </div>\n  \n  <!-- Second Container -->\n  <div id =\"que\" class=\"container-fluid bg-2 text-center\">\n    <h3 class=\"margin\">Esto es un trabajo práctico</h3>\n    <p>Cada universidad, cada facultad, cada carrera y obviamente cada materia en particular tiene estrategias didácticas y formas de evaluación diferentes. A pesar de que en muchos casos las universidades intentan estandarizar la forma de dictar clase para generar un orden en las planificaciones cuatrimestre a cuatrimestre, las formas de evaluación son elementales tanto para las instituciones y profesores como para los alumnos. A través de la evaluación formativa el educador busca información en el alumno para lograr comprender cómo se está\n      produciendo el proceso de aprendizaje y poder reajustar los objetivos pedagógicos. Y para el alumno es una muestra del progreso que está logrando y si puede aplicar, materializar y darle visibilidad a la comprensión del tema. Según Black y William (1998), la evaluación formativa, ayuda a que los estudiantes sean independientes a la hora del aprendizaje, es decir, se presenta como receptor, autorregulador y centro de esa misma evaluación. </p>\n    <a href=\"#\" class=\"btn btn-default btn-lg\">\n      <span class=\"glyphicon glyphicon-file\"></span> Descargar PDF\n    </a>\n  </div>\n  \n  <!-- Third Container (Grid) -->\n  <div id =\"donde\" class=\"container-fluid bg-3 text-center\">    \n    <h3 class=\"margin\">Dónde Funciona?</h3><br>\n    <div class=\"row\">\n      <div class=\"col-sm-4\">\n        <p>Con las tecnologias WEB que permiten desarrollar aplicaciones multiplataforma</p>\n        <img src=\"./assets/imagenes/quiensoy1.png\" class=\"img-responsive margin imagenDeQuienSoy\"  alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Principalmente orientada a la experiencia del usuario, garantizando que su funcionamieto sea fluido y pensado en el comportamiento del usuario y en la funcionalidad.</p>\n        <img src=\"./assets/imagenes/quiensoy2.jpg\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Para los sistemas operativos lideres en el mercado del consumo masivo</p>\n        <img src=\"./assets/imagenes/quiensoy3.png\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -2360,9 +2639,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentes_jugadores_listado_jugadores_listado_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../componentes/jugadores-listado/jugadores-listado.component */ "./src/app/componentes/jugadores-listado/jugadores-listado.component.ts");
 /* harmony import */ var _componentes_home_home_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../componentes/home/home.component */ "./src/app/componentes/home/home.component.ts");
 /* harmony import */ var _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../componentes/adivina-provincia/adivina-provincia.component */ "./src/app/componentes/adivina-provincia/adivina-provincia.component.ts");
+/* harmony import */ var _componentes_piedra_papel_tijera_piedra_papel_tijera_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../componentes/piedra-papel-tijera/piedra-papel-tijera.component */ "./src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts");
 
 
 // importo del module principal
+
 
 
 
@@ -2400,7 +2681,8 @@ var MiRuteo = [
             { path: 'AdivinaMasListado', component: _componentes_adivina_mas_listado_adivina_mas_listado_component__WEBPACK_IMPORTED_MODULE_8__["AdivinaMasListadoComponent"] },
             { path: 'AgilidadaMasListado', component: _componentes_agilidad_mas_listado_agilidad_mas_listado_component__WEBPACK_IMPORTED_MODULE_9__["AgilidadMasListadoComponent"] },
             { path: 'Agilidad', component: _componentes_agilidad_aritmetica_agilidad_aritmetica_component__WEBPACK_IMPORTED_MODULE_7__["AgilidadAritmeticaComponent"] },
-            { path: 'AdivinaProvincia', component: _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_19__["AdivinaProvinciaComponent"] }]
+            { path: 'AdivinaProvincia', component: _componentes_adivina_provincia_adivina_provincia_component__WEBPACK_IMPORTED_MODULE_19__["AdivinaProvinciaComponent"] },
+            { path: 'PiedraPapelTijera', component: _componentes_piedra_papel_tijera_piedra_papel_tijera_component__WEBPACK_IMPORTED_MODULE_20__["PiedraPapelTijeraComponent"] }]
     },
     { path: '**', component: _componentes_error_error_component__WEBPACK_IMPORTED_MODULE_5__["ErrorComponent"] },
     { path: 'error', component: _componentes_error_error_component__WEBPACK_IMPORTED_MODULE_5__["ErrorComponent"] }

@@ -19,6 +19,7 @@ img {
 }/* Add some padding inside the card container */
 .container {
     padding: 2px 16px;
+    display: -webkit-box;
 }
 
 
@@ -54,4 +55,10 @@ img {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+  }
+
+  .fondo{
+
+    background-image: url(".../../../docs/assets/imagenes/slider-bg-2.jpg");
+    margin-top: -60px;
   }

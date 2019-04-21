@@ -116,3 +116,14 @@ span.psw {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+.fondo{
+
+    background-image: url(".../../../docs/assets/imagenes/slider-bg-2.jpg");
+    margin-top: -60px;
+  }
+  .juego{
+    width: 23%;
+    margin-left: 40%;
+    color: wheat;
+  }

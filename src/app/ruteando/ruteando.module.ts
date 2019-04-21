@@ -23,7 +23,7 @@ import { MapaDeGoogleComponent } from '../componentes/mapa-de-google/mapa-de-goo
 import { JugadoresListadoComponent } from '../componentes/jugadores-listado/jugadores-listado.component';
 import { HomeComponent } from '../componentes/home/home.component';
 import { AdivinaProvinciaComponent } from '../componentes/adivina-provincia/adivina-provincia.component';
-
+import { PiedraPapelTijeraComponent } from '../componentes/piedra-papel-tijera/piedra-papel-tijera.component';
 
 // declaro donde quiero que se dirija
 const MiRuteo = [
@@ -46,7 +46,8 @@ children:
       {path: 'AdivinaMasListado' , component: AdivinaMasListadoComponent},
       {path: 'AgilidadaMasListado' , component: AgilidadMasListadoComponent},
       {path: 'Agilidad' , component: AgilidadAritmeticaComponent},
-      {path: 'AdivinaProvincia' , component: AdivinaProvinciaComponent}]
+      {path: 'AdivinaProvincia' , component: AdivinaProvinciaComponent},
+      {path: 'PiedraPapelTijera' , component: PiedraPapelTijeraComponent}]
 },
 {path: '**' , component: ErrorComponent},
 {path: 'error' , component: ErrorComponent}];

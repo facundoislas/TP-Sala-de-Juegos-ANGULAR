@@ -1,6 +1,6 @@
 
 import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
-import { JuegoAdivina } from '../../clases/juego-adivina'
+import { JuegoAdivina } from '../../clases/juego-adivina';
 
 @Component({
   selector: 'app-adivina-el-numero',
@@ -12,33 +12,41 @@ export class AdivinaElNumeroComponent implements OnInit {
 
   nuevoJuego: JuegoAdivina;
   Mensajes:string;
-  contador:number;
   ocultarVerificar:boolean;
+  arrayResultados : Array<any>;
+  jugador = JSON.parse(localStorage.getItem("Id"));
+  intentos: number;
+  aux: number;
  
   constructor() { 
-    this.nuevoJuego = new JuegoAdivina();
-    console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
+    
     this.ocultarVerificar=false;
+    this.arrayResultados = JSON.parse(this.jugador);
+    this.nuevoJuego = new JuegoAdivina("Adivina el Numero Secreto",false, this.jugador, 0, "0");
+    console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
   }
   generarnumero() {
     this.nuevoJuego.generarnumero();
-    this.contador=0;
+    this.intentos=0;
   }
   verificar()
   {
-    this.contador++;
+    this.aux = this.nuevoJuego.numeroIngresado 
+    
     this.ocultarVerificar=true;
-    console.info("numero Secreto:",this.nuevoJuego.gano);  
+    //console.info("numero Secreto:",this.nuevoJuego.gano);  
     if (this.nuevoJuego.verificar()){
       
       this.enviarJuego.emit(this.nuevoJuego);
       this.MostarMensaje("Sos un Genio!!!",true);
+      this.nuevoJuego.gano = true;
       this.nuevoJuego.numeroSecreto=0;
+      this.intentos+= 1;
+      this.nuevoJuego.jugador=sessionStorage.getItem('user');
 
     }else{
-
       let mensaje:string;
-      switch (this.contador) {
+      switch (this.intentos) {
         case 1:
           mensaje="No, intento fallido, animo";
           break;
@@ -46,26 +54,22 @@ export class AdivinaElNumeroComponent implements OnInit {
           mensaje="No,Te estaras Acercando???";
           break;
           case 3:
-          mensaje="No es, Yo crei que la tercera era la vencida.";
-          break;
-          case 4:
           mensaje="No era el  "+this.nuevoJuego.numeroIngresado;
           break;
-          case 5:
-          mensaje=" intentos y nada.";
-          break;
-          case 6:
-          mensaje="Afortunado en el amor";
-          break;
-      
-        default:
-            mensaje="Ya le erraste "+ this.contador+" veces";
-          break;
+          default:
+            mensaje="Llegaste a tu limite de intentos, iniciar nuevo juego";
       }
-      this.MostarMensaje("#"+this.contador+" "+mensaje+" ayuda :"+this.nuevoJuego.retornarAyuda());
-     
+      this.intentos++;
+      
+      
+      this.MostarMensaje("#"+this.intentos+" "+mensaje+" ayuda :"+this.nuevoJuego.retornarAyuda());
+      this.nuevoJuego.numeroIngresado = null;
 
     }
+    this.nuevoJuego.intentos = this.intentos;
+    this.nuevoJuego.guardarLocal();
+      this.nuevoJuego.jugador=sessionStorage.getItem('user');
+    
     console.info("numero Secreto:",this.nuevoJuego.gano);  
   }  
 
