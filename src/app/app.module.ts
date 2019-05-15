@@ -64,6 +64,7 @@ import { MenuPrincipalComponent } from './componentes/menu-principal/menu-princi
 import { FooterComponent } from './componentes/footer/footer.component';
 import { AdivinaProvinciaComponent } from './componentes/adivina-provincia/adivina-provincia.component';
 import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { TatetiComponent } from './componentes/tateti/tateti.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/pi
     MenuPrincipalComponent,
     FooterComponent,
     AdivinaProvinciaComponent,
-    PiedraPapelTijeraComponent
+    PiedraPapelTijeraComponent,
+    TatetiComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {JuegoAdivinaProvincia} from '../../clases/juego-adivina-provincia'
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-adivina-provincia',
@@ -13,6 +14,7 @@ export class AdivinaProvinciaComponent implements OnInit {
   ocultarVerificar : boolean;
   ocultarNuevo : boolean;
   Mensajes:string;
+  puntos:number;
   nombre:string = "Adivina la Provincia"
   arrayResultados : Array<any>;
   jugador = JSON.parse(localStorage.getItem("Id"));
@@ -22,10 +24,11 @@ export class AdivinaProvinciaComponent implements OnInit {
 
     this.nuevoJuego = new JuegoAdivinaProvincia("Adivina La Provincia",false,this.jugador, 0, "00");
     this.ocultarVerificar = true;
-    
+    this.puntos=0;
     this.arrayResultados = JSON.parse(this.jugador);
     this.intentos = 0;
-    console.info(this.arrayResultados);
+    
+    //console.info(this.arrayResultados);
 
    }
 
@@ -33,45 +36,61 @@ export class AdivinaProvinciaComponent implements OnInit {
    {
      this.ocultarVerificar = false;
      this.nuevoJuego.generar();
-     console.log(this.nuevoJuego.elementoAdivinar);
+     
+     //console.log(this.nuevoJuego.elementoAdivinar);
    }
 
    public verificar()
    {
-    console.log(this.nuevoJuego.opcionIngresada);
+    //console.log(this.nuevoJuego.opcionIngresada);
     
     if(this.nuevoJuego.verificar())
       {
-        this.MostarMensaje("Correcto. Acertaste la correcta!!",true);
-        this.nuevoJuego.gano = true;
+        this.MostarMensaje("Muy bien acertaste!!", true);
         this.nuevoJuego.nombre="Adivina La Provincia";
         this.nuevoJuego.jugador=sessionStorage.getItem('user');
         this.nuevoJuego.intentos = this.intentos+1;
-        this.intentos=0;
+        this.intentos+=1;
         
         
       }
       else
         {
           if(this.intentos<3){
-          this.nuevoJuego.gano = false;
           this.nuevoJuego.nombre="Adivina La Provincia";
           this.nuevoJuego.jugador=sessionStorage.getItem('user');
-          this.MostarMensaje("Fallaste. La opcion elegida es incorrecta!!",false);
-          this.intentos++;
+          this.MostarMensaje("Elegiste la opcion incorrecta!!",false);
+          
           }
           this.nuevoJuego.intentos = this.intentos;
         }
-        if(this.intentos == 3)
-        {
-          this.MostarMensaje("Fallaste. Ya llegaste al maximo de intentos!!",false);
-          this.intentos = 0;
-          
-        }
-        this.nuevoJuego.guardarLocal();
         
-        //Despues de verificar si gane o no, reinicio el juego!!
+
         this.nuevoJuego = new JuegoAdivinaProvincia("Adivina La Provincia",false,this.jugador,0,"00");
+        this.puntos+=1;
+        console.log(this.puntos);
+        if(this.puntos==3)
+        {
+          console.log("intentos: " + this.intentos);
+          this.nuevoJuego.guardarLocal();
+          this.puntos=0;
+          if(this.intentos>1)
+          {
+            this.nuevoJuego.gano = true;
+            this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
+          }
+          else
+          {
+            this.nuevoJuego.gano = false;
+            this.MostarMensaje("Perdiste! Ahora empieza un nuevo juego",false);
+          }
+            console.log(this.nuevoJuego.gano);
+          this.intentos = 0;
+         
+        }
+        
+        
+        
    }
 
    MostarMensaje(mensaje:string="este es el mensaje",ganador:boolean=false) {

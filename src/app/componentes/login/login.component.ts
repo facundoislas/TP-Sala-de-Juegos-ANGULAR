@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     
     this.logeando=false;
     this.clase="progress-bar progress-bar-danger progress-bar-striped active";
-    this.progresoMensaje="NSA spy..."; 
+    this.progresoMensaje="Iniciando comprobacion"; 
     let timer = TimerObservable.create(200, 50);
     this.subscription = timer.subscribe(t => {
       console.log("inicio");
@@ -73,11 +73,11 @@ export class LoginComponent implements OnInit {
       switch (this.progreso) {
         case 15:
         this.clase="progress-bar progress-bar-warning progress-bar-striped active";
-        this.progresoMensaje="Verificando ADN..."; 
+        this.progresoMensaje="Verificando Usuario..."; 
           break;
         case 30:
           this.clase="progress-bar progress-bar-Info progress-bar-striped active";
-          this.progresoMensaje="Adjustando encriptación.."; 
+          this.progresoMensaje="Verificando contraseña.."; 
           break;
           case 60:
           this.clase="progress-bar progress-bar-success progress-bar-striped active";
@@ -85,11 +85,11 @@ export class LoginComponent implements OnInit {
           break;
           case 75:
           this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Recompilando claves facebook, gmail, chats..";
+          this.progresoMensaje="Desencriptacion de clave ..";
           break;
           case 85:
           this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Instalando KeyLogger..";
+          this.progresoMensaje="Clave ok, ingresando..";
           break;
           
         case 100:

@@ -24,6 +24,8 @@ import { JugadoresListadoComponent } from '../componentes/jugadores-listado/juga
 import { HomeComponent } from '../componentes/home/home.component';
 import { AdivinaProvinciaComponent } from '../componentes/adivina-provincia/adivina-provincia.component';
 import { PiedraPapelTijeraComponent } from '../componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { AnagramaComponent } from '../componentes/anagrama/anagrama.component';
+import { TatetiComponent } from '../componentes/tateti/tateti.component';
 
 // declaro donde quiero que se dirija
 const MiRuteo = [
@@ -47,7 +49,9 @@ children:
       {path: 'AgilidadaMasListado' , component: AgilidadMasListadoComponent},
       {path: 'Agilidad' , component: AgilidadAritmeticaComponent},
       {path: 'AdivinaProvincia' , component: AdivinaProvinciaComponent},
-      {path: 'PiedraPapelTijera' , component: PiedraPapelTijeraComponent}]
+      {path: 'Anagrama' , component: AnagramaComponent},
+      {path: 'PiedraPapelTijera' , component: PiedraPapelTijeraComponent},
+      {path: 'Tateti' , component: TatetiComponent}]
 },
 {path: '**' , component: ErrorComponent},
 {path: 'error' , component: ErrorComponent}];

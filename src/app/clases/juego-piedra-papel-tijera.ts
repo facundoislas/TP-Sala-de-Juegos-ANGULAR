@@ -14,7 +14,7 @@ export class JuegoPiedraPapelTijera extends Juego {
 
         public verificar()
         {
-                return true;
+                return this.gana;
         
         }
         
