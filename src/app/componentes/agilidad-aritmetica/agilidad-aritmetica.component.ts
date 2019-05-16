@@ -31,7 +31,7 @@ export class AgilidadAritmeticaComponent implements OnInit {
     this.Tiempo=5; 
     this.arrayResultados = JSON.parse(this.jugador);
     this.intentos = 0;
-    this.nuevoJuego = new JuegoAgilidad("AgilidadAritmetica", false, this.jugador, 0, "00");
+    this.nuevoJuego = new JuegoAgilidad("Agilidad Aritmetica", false, this.jugador, 0, "00");
     
     console.info("Inicio agilidad");  
   }

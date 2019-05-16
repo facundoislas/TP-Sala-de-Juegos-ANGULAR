@@ -74,7 +74,8 @@ export class JuegoAdivinaProvincia extends Juego  {
     elementoAdivinar : any; 
 
     constructor(nombre?: string, gano?: boolean, jugador?:string, intentos?:any,resultado?:string) {
-        super("Adivina la provincia", gano,jugador, intentos, resultado);  
+        super(nombre, gano,jugador, intentos, resultado);  
+        this.nombre = "Adivina la provincia";
       }
 
       public verificar()

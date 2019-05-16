@@ -5,13 +5,14 @@ export class Tateti extends Juego{
 
     
     posiciones: Array<any>;
-    jugador:string;
+    juega:string;
     i:number;
     j:number;
     jugadas:number;
 
     constructor(nombre?: string, gano?: boolean, jugador?:string, intentos?:any,resultado?:string) {
-        super("Tateti", gano,jugador, intentos, resultado);  
+        super(nombre, gano,jugador, intentos, resultado);  
+        this.nombre = "Tateti";
       }
 
       generarTateti()
@@ -19,7 +20,7 @@ export class Tateti extends Juego{
         this.posiciones = [['-','-','-'],
         ['-','-','-'],
         ['-','-','-']];
-        this.jugador = 'O';
+        this.juega = 'O';
         this.jugadas = 5;
         
       }
@@ -50,7 +51,7 @@ export class Tateti extends Juego{
             this.generarAleatorio();
             console.log("i: " + this.i + " j: " + this.j);
         }while(this.validar() && this.jugadas>1);
-        this.posiciones[this.i][this.j] = this.jugador;
+        this.posiciones[this.i][this.j] = this.juega;
         this.jugadas-=1;
         console.log(this.jugadas);
       }
@@ -59,13 +60,13 @@ export class Tateti extends Juego{
 
 
       cambiarJugador() {
-        if (this.jugador=='O')
+        if (this.juega=='O')
         {
-          this.jugador='X';
+          this.juega='X';
           
         }
           else
-          this.jugador='O';    
+          this.juega='O';    
       }
 
 

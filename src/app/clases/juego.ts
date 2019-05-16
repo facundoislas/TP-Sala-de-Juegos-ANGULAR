@@ -32,7 +32,7 @@ export abstract class Juego {
     if(idstring==null)
      {
        this.id=1;
-       localStorage.setItem("Id","1")
+       localStorage.setItem("Id","1");
      }
      else{
        this.id= +idstring;

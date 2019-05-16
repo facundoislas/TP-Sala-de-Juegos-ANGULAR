@@ -48,35 +48,25 @@
   <body class="fondo">
     <div class="container">
     <!---heading---->
-        <header class="heading"> Registration-Form</header>
+        <header class="heading"> Formulario de Registro</header>
      <!---Form starting----> 
      <div class="row ">
       <!--- For Name---->
             <div class="col-sm-12">
                 <div class="row">
               <div class="col-xs-4">
-                        <label class="firstname">First Name :</label> </div>
+                        <label class="firstname">Nombre</label> </div>
                 <div class="col-xs-8">
                     <input type="text" name="fname" id="fname" placeholder="Enter your First Name" class="form-control ">
                 </div>
              </div>
         </div>
         
-        
-            <div class="col-sm-12">
-            <div class="row">
-              <div class="col-xs-4">
-                        <label class="lastname">Last Name :</label></div>
-           <div class ="col-xs-8">	 
-                    <input type="text" name="lname" id="lname" placeholder="Enter your Last Name" class="form-control last">
-                   </div>
-            </div>
-        </div>
         <!-----For email---->
         <div class="col-sm-12">
             <div class="row">
               <div class="col-xs-4">
-                    <label class="mail" >Email :</label></div>
+                    <label class="mail" >Correo :</label></div>
               <div class="col-xs-8"	>	 
                    <input type="email" name="email"  id="email"placeholder="Enter your email" class="form-control" >
                 </div>
@@ -86,9 +76,9 @@
              <div class="col-sm-12">
                 <div class="row">
                 <div class="col-xs-4">
-                        <label class="pass">Password :</label></div>
+                        <label class="pass">Contraseña :</label></div>
              <div class="col-xs-8">
-                      <input type="password" name="password" id="password" placeholder="Enter your Password" class="form-control">
+                      <input type="password" name="password" id="password" placeholder="Ingresa tu contra" class="form-control">
             </div>
              </div>
          </div>
@@ -97,21 +87,25 @@
             <div class="col-sm-12">
             <div class ="row">
                     <div class="col-xs-4 ">
-                <label class="gender">Gender:</label>
+                <label class="gender">Genero:</label>
             </div>
           
               <div class="col-xs-4 male">	 
-                <input type="radio" name="gender"  id="gender" value="boy">Male
+                <input type="radio" name="gender"  id="gender" value="boy">Masculino
             </div>
             
             <div class="col-xs-4 female">
-                <input type="radio"  name="gender" id="gender" value="girl" >Female
+                <input type="radio"  name="gender" id="gender" value="girl" >Femenino
               </div>
          
             </div>
             <div class="col-sm-12">
-                <div class="btn btn-warning">Submit</div>
+                <div class="btn btn-warning">Enviar</div>
           </div>
+          <br>
+          <div class="col-sm-12">
+            <div class="btn btn-warning" routerLink="/">Loguearse</div>
+      </div>
         </div>
       </div>	 
              

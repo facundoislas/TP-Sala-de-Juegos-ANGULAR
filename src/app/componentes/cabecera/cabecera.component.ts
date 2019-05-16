@@ -38,7 +38,7 @@ export class CabeceraComponent implements OnInit {
       this.auth.logout();
       sessionStorage.clear();
       this.logueado=false;
-      alert("Se cierra Sesion");
+      this.router.navigate(['']);
       console.log("Se cierra sesion");
     }
 

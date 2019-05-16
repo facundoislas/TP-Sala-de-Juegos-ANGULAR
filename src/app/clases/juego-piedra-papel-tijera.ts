@@ -8,8 +8,9 @@ export class JuegoPiedraPapelTijera extends Juego {
     compu:string;
     gana:boolean;
     constructor(nombre?: string, gano?: boolean, jugador?:string, intentos?:any,resultado?:string) {
-        super("Piedra, Papel o Tijera", gano,jugador, intentos, resultado);  
+        super(nombre, gano,jugador, intentos, resultado);  
         this.opcionMaquina = null;
+        this.nombre = "Piedra, Papel o Tijera";
           }
 
         public verificar()

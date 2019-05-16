@@ -53,9 +53,11 @@ export class LoginComponent implements OnInit {
       }
     )
      .catch(async err=>{
-      alert("Error");
+     
       this.progreso=0;
       this.ProgresoDeAncho="0%";
+      this.MostarMensaje("Error al loguearse", true);
+      this.logeando = true;
       });
     
   }
@@ -120,4 +122,18 @@ export class LoginComponent implements OnInit {
         this.user.password="222222";
     }
 
+
+    MostarMensaje(mensaje:string,gano:boolean) {
+       this.Mensaje = mensaje;
+      var x = document.getElementById("snackbar");
+      if(gano)
+          x.className = "show Ganador";
+      var modelo = this;
+      setTimeout(function(){ 
+        x.className = x.className.replace("show", "");
+        //modelo.ocultarVerificar=false;
+       }, 3000);
+      console.info("objeto",x);
+    
+     } 
 }

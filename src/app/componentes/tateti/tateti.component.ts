@@ -13,19 +13,23 @@ export class TatetiComponent implements OnInit {
   Mensajes:string;
   ocultarVerificar:boolean;
   arrayResultados : Array<any>;
-  jugadorL = JSON.parse(localStorage.getItem("Id"));
+  jugador = JSON.parse(localStorage.getItem("Id"));
   intentos: number;
 
   constructor() {
-    this.nuevoJuego = new Tateti("Tateti",false, this.jugadorL,0, "0"); 
+    this.nuevoJuego = new Tateti("Tateti",false, this.jugador,0, "0"); 
     this.ocultarVerificar = true;
-    this.arrayResultados = JSON.parse(this.jugadorL);
+    this.arrayResultados = JSON.parse(this.jugador);
   }
 
   public generar()
   {
+    
     this.ocultarVerificar = false;
     this.nuevoJuego.generarTateti();
+    this.nuevoJuego = new Tateti("Tateti",false, this.jugador,0, "0"); 
+    
+    
     
   }
 
@@ -33,12 +37,11 @@ export class TatetiComponent implements OnInit {
   presion(fila:number,columna:number) {
     if (this.nuevoJuego.posiciones[fila][columna]=='-' && this.nuevoJuego.jugadas>0) {
       
-      this.nuevoJuego.posiciones[fila][columna]=this.nuevoJuego.jugador;
+      this.nuevoJuego.posiciones[fila][columna]=this.nuevoJuego.juega;
       this.nuevoJuego.cambiarJugador();
       this.nuevoJuego.eleccionMaquina();
       this.nuevoJuego.cambiarJugador();
-        this.verificarGano('O');
-      this.verificarGano('X');
+        this.quienGano();
       
       
     }
@@ -46,82 +49,59 @@ export class TatetiComponent implements OnInit {
 
   
 
+  quienGano()
+  {
+    if(this.verificarGano('O'))
+    {
+      this.MostarMensaje("Sos un genio, le ganaste a la inteligencia artificial", true);
+      
+      this.nuevoJuego.gano= true;
+      this.nuevoJuego.jugador=sessionStorage.getItem('user');
+      this.nuevoJuego.guardarLocal();
+      this.nuevoJuego.generarTateti();
+    }
+    if(this.verificarGano('X'))
+    {
+      this.MostarMensaje("La maquina te gano", false);
+      this.nuevoJuego.gano= false;
+      this.nuevoJuego.jugador=sessionStorage.getItem('user');
+      this.nuevoJuego.guardarLocal();
+      this.nuevoJuego = new Tateti("Tateti",false, this.jugador,0, "0"); 
+      this.nuevoJuego.generarTateti();
+    }
+    if(this.nuevoJuego.jugadas==0 && this.nuevoJuego.juega == 'X')
+    {
+      
+      this.nuevoJuego.gano= false;
+      this.nuevoJuego.jugador=sessionStorage.getItem('user');
+      this.nuevoJuego.guardarLocal();
+      this.MostarMensaje("empate", false);
+    }
+  }
+
   
  
 
   verificarGano(ficha: string,) {
     if (this.nuevoJuego.posiciones[0][0]==ficha && this.nuevoJuego.posiciones[0][1]==ficha && this.nuevoJuego.posiciones[0][2]==ficha)
-      {
-       
-        if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-        this.nuevoJuego.reiniciar();  
-      }
+      return true;
     if (this.nuevoJuego.posiciones[1][0]==ficha && this.nuevoJuego.posiciones[1][1]==ficha && this.nuevoJuego.posiciones[1][2]==ficha)
-    {
-      
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }
+    
+      return true;
     if (this.nuevoJuego.posiciones[2][0]==ficha && this.nuevoJuego.posiciones[2][1]==ficha && this.nuevoJuego.posiciones[2][2]==ficha)
-    {
-   
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }
+  
+      return true;  
+  
     if (this.nuevoJuego.posiciones[0][0]==ficha && this.nuevoJuego.posiciones[1][0]==ficha && this.nuevoJuego.posiciones[2][0]==ficha)
-    {
-   
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }
+      return true;
     if (this.nuevoJuego.posiciones[0][1]==ficha && this.nuevoJuego.posiciones[1][1]==ficha && this.nuevoJuego.posiciones[2][1]==ficha)
-    {
-      
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }
+      return true;
     if (this.nuevoJuego.posiciones[0][2]==ficha && this.nuevoJuego.posiciones[1][2]==ficha && this.nuevoJuego.posiciones[2][2]==ficha)
-    {
-      
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }      
+      return true;  
     if (this.nuevoJuego.posiciones[0][0]==ficha && this.nuevoJuego.posiciones[1][1]==ficha && this.nuevoJuego.posiciones[2][2]==ficha)
-    {
-      
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }
+      return true;
     if (this.nuevoJuego.posiciones[0][2]==ficha && this.nuevoJuego.posiciones[1][1]==ficha && this.nuevoJuego.posiciones[2][0]==ficha)
-    {
-      
-      if(ficha == "O")
-        {
-          this.MostarMensaje("Ganaste! Ahora empieza un nuevo juego",true);
-        }
-      this.nuevoJuego.reiniciar();  
-    }      
+      return true;
   }
 
   MostarMensaje(mensaje:string="este es el mensaje",ganador:boolean=false) {
@@ -144,8 +124,9 @@ export class TatetiComponent implements OnInit {
   
 
   ngOnInit() {
-
+    
     this.nuevoJuego.generarTateti();
+
   }
 
 }

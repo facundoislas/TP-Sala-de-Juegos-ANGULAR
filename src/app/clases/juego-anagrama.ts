@@ -9,21 +9,22 @@ export class JuegoAnagrama extends Juego {
 
     constructor(nombre?: string, gano?: boolean, jugador?:string, intentos?:any,resultado?:string) {
         super(nombre, gano,jugador, intentos, resultado);  
+        this.nombre="Anagrama";
       }
 
 
       arrayDePalabras : Array <any >= [
-        { ordenada:"pantalla",desordenada:"platanal" },
-        { ordenada:"mouse",desordenada:"museo" },
-        { ordenada:"clase",desordenada:"alces" },
-        { ordenada:"estilos",desordenada:"islotes" },
-        { ordenada:"materias",desordenada:"maestria" },
-        { ordenada:"asignatura",desordenada:"angustiara" },
-        { ordenada:"sistema",desordenada:"mesitas" },
-        { ordenada:"tecnico",desordenada:"coticen" },
-        { ordenada:"pendrive",desordenada:"prevenid" },
-        { ordenada:"lapicera",desordenada:"paralice" },
-        { ordenada:"cuaderno",desordenada:"educaron" }
+        { ordenada:"Saco",desordenada:"Cosa" },
+        { ordenada:"Alicante",desordenada:"Caliente" },
+        { ordenada:"Frase",desordenada:"Fresa" },
+        { ordenada:"Amor",desordenada:"Roma" },
+        { ordenada:"Delira",desordenada:"Lidera" },
+        { ordenada:"Pedro",desordenada:"Poder" },
+        { ordenada:"Resto",desordenada:"Retos" },
+        { ordenada:"Trata",desordenada:"Tarta" },
+        { ordenada:"Toro",desordenada:"Roto" },
+        { ordenada:"Cronista",desordenada:"Cortinas" },
+        { ordenada:"Eva",desordenada:"Ave" }
 
     ];
 
@@ -37,7 +38,7 @@ export class JuegoAnagrama extends Juego {
 
 
     verificar(){
-        if(this.palabraIngresada.toLowerCase() == this.palabraOrdenada)
+        if(this.palabraIngresada.toLowerCase() == this.palabraOrdenada.toLowerCase())
         {
         this.gano = true;
          }

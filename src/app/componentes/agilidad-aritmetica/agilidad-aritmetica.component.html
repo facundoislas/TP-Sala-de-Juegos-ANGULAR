@@ -23,13 +23,14 @@
      
    </li>
   <li>
-    <h2 [hidden]="ocultarVerificar" ><button (click)="verificar()" class="btn btn-success btn-lg">Verificar {{Tiempo}} </button></h2>
+    <h2 [hidden]="ocultarVerificar" ><button (click)="verificar()" class="btn btn-success btn-lg" >Verificar {{Tiempo}} </button></h2>
   </li>
-  <li>
-    <h2 [hidden]="!ocultarVerificar"><button  (click)="NuevoJuego()"  class="btn btn-info btn-lg">Nuevo</button></h2>
+  <li><br>
+    <h2 [hidden]="!ocultarVerificar"><button  (click)="NuevoJuego()"  class="btn btn-outline-success btn-lg" style="
+      padding: 20px;" >Nuevo</button></h2>
   </li>
   <li [hidden]="ocultarVerificar">
-    <h2><p><i class="fa fa-spinner fa-spin" ></i>Esperando numero...</p></h2>
+    <h2><p><i class="loader" ></i>         Esperando numero...</p></h2>
   </li>
 </ul>
 

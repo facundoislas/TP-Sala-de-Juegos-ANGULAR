@@ -48,7 +48,7 @@ export class AdivinaProvinciaComponent implements OnInit {
       {
         this.MostarMensaje("Muy bien acertaste!!", true);
         this.nuevoJuego.nombre="Adivina La Provincia";
-        this.nuevoJuego.jugador=sessionStorage.getItem('user');
+        
         this.nuevoJuego.intentos = this.intentos+1;
         this.intentos+=1;
         
@@ -58,7 +58,7 @@ export class AdivinaProvinciaComponent implements OnInit {
         {
           if(this.intentos<3){
           this.nuevoJuego.nombre="Adivina La Provincia";
-          this.nuevoJuego.jugador=sessionStorage.getItem('user');
+          
           this.MostarMensaje("Elegiste la opcion incorrecta!!",false);
           
           }
@@ -72,6 +72,7 @@ export class AdivinaProvinciaComponent implements OnInit {
         if(this.puntos==3)
         {
           console.log("intentos: " + this.intentos);
+          this.nuevoJuego.jugador=sessionStorage.getItem('user');
           this.nuevoJuego.guardarLocal();
           this.puntos=0;
           if(this.intentos>1)

@@ -24,6 +24,7 @@ export class AdivinaElNumeroComponent implements OnInit {
     this.arrayResultados = JSON.parse(this.jugador);
     this.nuevoJuego = new JuegoAdivina("Adivina el Numero Secreto",false, this.jugador, 0, "0");
     console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
+    this.nuevoJuego.jugador=sessionStorage.getItem('user');
   }
   generarnumero() {
     this.nuevoJuego.generarnumero();
@@ -47,6 +48,9 @@ export class AdivinaElNumeroComponent implements OnInit {
     }else{
       let mensaje:string;
       switch (this.intentos) {
+        case 0:
+          mensaje="casi casi";
+          break;
         case 1:
           mensaje="No, intento fallido, animo";
           break;
@@ -91,6 +95,7 @@ export class AdivinaElNumeroComponent implements OnInit {
   
    }  
   ngOnInit() {
+    
   }
 
 }

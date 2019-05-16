@@ -30,15 +30,12 @@ import { TatetiComponent } from '../componentes/tateti/tateti.component';
 // declaro donde quiero que se dirija
 const MiRuteo = [
 {path: 'Jugadores' , component: JugadoresListadoComponent},
-{path: '' , component: PrincipalComponent},
+{path: '' , component: LoginComponent},
 {path: 'Login' , component: LoginComponent},
-{path: 'Mapa' , component: MapaDeGoogleComponent},
 {path: 'QuienSoy' , component: QuienSoyComponent},
 {path: 'Registro' , component: RegistroComponent},
 {path: 'Principal' , component: PrincipalComponent},
 {path: 'Listado' , component: ListadoComponent},
-{path: 'Paises' , component: ListadoDePaisesComponent},
-{path: 'Home' , component: HomeComponent},
 
 { path: 'Juegos' ,
 component: JuegosComponent ,
